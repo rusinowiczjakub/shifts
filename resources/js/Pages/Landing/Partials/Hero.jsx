@@ -23,9 +23,9 @@ export const Hero = () => {
                     <div className="relative items-center gap-12 lg:flex">
                         <div
                             className="text-center sm:mx-auto sm:w-11/12 md:mt-12 md:w-4/5 lg:mt-0 lg:mr-auto lg:w-6/12 lg:text-left">
-                            <p className="mt-12 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">Computers used to
-                                be magical. But much of that magic has been lost over time, replaced by subpar tools and
-                                practices that slow teams down and hold great work back.</p>
+                            <p className="mt-12 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">Doświadcz
+                                niezależności i elastyczności w pracy medycznej. Nasza aplikacja to nowy wymiar kariery,
+                                gdzie każda zmiana otwiera drzwi do sukcesu. Zapisz się do <span className={'text-blue-600'}>waitlisty</span> i otrzymuj informacje o starcie aplikacji!</p>
                             <form action="" className="mt-12 border-transparent focus:border-transparent focus:ring-0">
                                 <div
                                     className="relative flex items-center rounded-full border border-primary/20 bg-white p-1 px-2 shadow-md focus-within:ring-2 dark:border-white/10 dark:bg-dark dark:text-white md:p-2 lg:pr-3">
@@ -38,23 +38,24 @@ export const Hero = () => {
                                             <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                         </svg>
                                     </div>
-                                    <input aria-label="your email" autoComplete="email" placeholder="Your mail address"
+                                    <input aria-label="your email" autoComplete="email" placeholder="Adres email"
                                            className="w-full rounded-full border-0 border-transparent focus:border-transparent focus:ring-0 bg-transparent p-4 placeholder-gray-600 dark:placeholder-white"
                                            type="email"/>
-                                        <div className="md:pr-1.5 lg:pr-0">
-                                            <button type="submit" title="Start buying"
-                                                    className="relative ml-auto h-12 w-16 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 active:duration-75 active:before:scale-95 dark:before:bg-primaryLight sm:w-auto sm:px-6">
+                                    <div className="md:pr-1.5 lg:pr-0">
+                                        <button type="submit" title="Start buying"
+                                                className="relative ml-auto h-12 w-16 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 active:duration-75 active:before:scale-95 dark:before:bg-primaryLight sm:w-auto sm:px-6">
                                                 <span
                                                     className="relative w-max font-semibold text-blue-600 dark:text-gray-900 md:block"> Zapisz się </span>
 
-                                            </button>
-                                        </div>
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
-                        <div className="mt-12 w-full overflow-hidden sm:mt-20 lg:-mt-8 lg:w-6/12">
-                            <img className="w-full" src="./images/team.svg" alt="team illustration" height="600"
+                        <div className="mt-12 w-full relative overflow-hidden sm:mt-20 lg:-mt-8 lg:w-6/12">
+                            <img className="w-full" src="./images/landing/hero.jpg" alt="team illustration" height="600"
                                  width="800"/>
+                            <div className={'absolute w-full h-full bg-gradient-to-b from-[#FFFFFF00] via-[#FFFFFF100] to-[##FFFFFF100]'}></div>
                         </div>
                     </div>
                 </div>
