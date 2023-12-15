@@ -10,12 +10,18 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = [
+        'name',
         'street',
         'city',
         'postal_code',
-        'building',
-        'flat',
-        'latitude',
-        'longitude'
+        'building_number',
+        'apartment',
+        'email',
+        'phone_number',
+        'is_default'
+    ];
+
+    protected $attributes = [
+        'is_default' => false
     ];
 }

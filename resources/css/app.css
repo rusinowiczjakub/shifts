@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer utilities {
     @variants responsive {
@@ -14,5 +18,81 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+    }
+}
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    /*letter-spacing: .1em;*/
+}
+
+.clp4d {
+    --tw-gradient-to: #fff;
+}
+.ch30j {
+    --tw-gradient-from: #e0e7ff;
+    --tw-gradient-to: rgb(224 231 255 / 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.c0wb5 {
+    background-image: linear-gradient(to bottom,var(--tw-gradient-stops));
+}
+.cxio3 {
+    z-index: -10;
+}
+.cdf7d {
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+.c5u32 {
+    position: absolute;
+}
+.cp8r2 {
+    pointer-events: none;
+}
+.c6bzk {
+    display: block;
+}
+
+.crssf {
+    --tw-translate-x: -50%;
+    transform: translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.ca2z8 {
+    display: none;
+}
+.cxio3 {
+    z-index: -10;
+}
+.c5ngk {
+    left: 50%;
+}
+.c5u32 {
+    position: absolute;
+}
+.cp8r2 {
+    pointer-events: none;
+}
+
+@media (min-width: 640px) {
+    .c1dhf {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .cctbj {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .cyd7h {
+        max-width: 72rem;
+    }
+
+    .cscbh {
+        margin-left: auto;
+        margin-right: auto;
     }
 }

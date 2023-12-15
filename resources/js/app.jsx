@@ -6,7 +6,15 @@ import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import {initFlowbite} from "flowbite";
+import { Flowbite } from 'flowbite-react';
 
+const customTheme = {
+    button: {
+        color: {
+            primary: 'bg-primary-700',
+        },
+    },
+};
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
@@ -21,7 +29,10 @@ createInertiaApp({
         const root = createRoot(el);
 
         root.render(
-            <App {...props} />);
+            <Flowbite theme={customTheme}>
+                <App {...props} />
+            </Flowbite>
+        );
     },
     progress: {
         color: '#4B5563',

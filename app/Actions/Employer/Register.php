@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Actions\Employer;
 
+use App\Models\Enums\UserType;
+use App\Models\Institution;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +24,18 @@ class Register
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 
+        /** @var User $user */
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'type' => UserType::EMPLOYER->value
+        ]);
+
+        /** @var Institution $institution */
+        $institution = $user->institution()->create();
+        $institution->address()->create([
+            'is_default' => true
         ]);
 
         event(new Registered($user));

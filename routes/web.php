@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\JobBoard\Index;
 use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
@@ -34,11 +35,15 @@ Route::prefix('employer')
         Route::post('/shift', CreateShift::class)->name('shift.create');
         Route::get('/shift/{shiftId}/applications/', ShowShiftApplications::class)->name('shift.applications');
         Route::get('/shift/{shiftId}/applications/{id}', ShowApplicationDetails::class)->name('shift.applications');
+        Route::get('/settings', Employer\Settings::class)->name('settings.index');
+        Route::post('/settings/company', Employer\UpdateCompanyProfile::class)->name('settings.company.update');
+        Route::post('/settings/address/{address}', Employer\UpdateAddress::class)->name('settings.address.update');
+        Route::post('/settings/address', Employer\CreateAddress::class)->name('settings.address.create');
     });
 
 Route::prefix('jobboard')
     ->group(function () {
-        Route::get('/', \App\Actions\JobBoard\Index::class);
+        Route::get('/', Index::class);
     });
 
 Route::get('/dashboard', function () {
@@ -59,6 +64,10 @@ Route::get('employer/register', function () {
 Route::post('employer/register', Employer\Register::class);
 // EMPLOYER AUTH
 
+
+Route::get('/landing', function () {
+    return Inertia::render('Landing/Index');
+});
 
 
 
