@@ -16,6 +16,7 @@ export const Waitlist = (props) => {
         e.preventDefault();
 
         post(route('landing.lead.create'), {
+            preserveScroll: true,
             onSuccess: () => {
                 reset('email', 'privacy_policy')
             }
@@ -77,9 +78,9 @@ export const Waitlist = (props) => {
                                         <div className="flex items-center">
                                             <input required checked={data.privacy_policy}
                                                    onChange={(e) => setData('privacy_policy', e.target.checked)}
-                                                   id="checked-checkbox" type="checkbox"
+                                                   id="checked-checkbox-2" type="checkbox"
                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                            <label htmlFor="checked-checkbox"
+                                            <label htmlFor="checked-checkbox-2"
                                                    className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">
                                                 Rozumiem i akceptuję <a className={'text-blue-500'}
                                                                         href={'/documents/polityka_prywatnosci.pdf'}
@@ -90,6 +91,9 @@ export const Waitlist = (props) => {
                                         </div>
                                     </form>
                                 }
+                            </div>
+                            <div className={'mt-4 text-gray-600 text-center text-sm'}>
+                                W przypadku pytań prosimy o kontakt na adres email: kontakt@medshifts.app
                             </div>
                         </div>
                     </div>

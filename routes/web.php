@@ -40,10 +40,10 @@ Route::prefix('employer')
         Route::post('/settings/address', Employer\CreateAddress::class)->name('settings.address.create');
     });
 
-Route::prefix('jobboard')
-    ->group(function () {
-        Route::get('/', Index::class);
-    });
+//Route::prefix('jobboard')
+//    ->group(function () {
+//        Route::get('/', Index::class);
+//    });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -64,11 +64,11 @@ Route::post('employer/register', Employer\Register::class);
 // EMPLOYER AUTH
 
 
-Route::get('/landing', function () {
+Route::get('/', function () {
     return Inertia::render('Landing/Index');
 });
 
-Route::post('/landing', \App\Actions\Landing\CreateLead::class)
+Route::post('/', \App\Actions\Landing\CreateLead::class)
     ->name('landing.lead.create');
 
 
