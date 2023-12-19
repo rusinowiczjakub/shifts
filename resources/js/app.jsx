@@ -20,7 +20,7 @@ const appName = window.document.getElementsByTagName('title')[0]?.innerText || '
 
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => `${appName}`,
     resolve: (name) => {
         initFlowbite();
         return resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx'))
