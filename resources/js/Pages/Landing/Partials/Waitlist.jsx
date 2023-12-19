@@ -11,7 +11,6 @@ export const Waitlist = (props) => {
     if (!showToast && props.success) {
         setShowToast(true);
     }
-    console.log(props);
     const submit = (e) => {
         e.preventDefault();
 
