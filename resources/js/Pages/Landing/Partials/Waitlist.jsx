@@ -35,7 +35,7 @@ export const Waitlist = (props) => {
                                     do <span
                                     className={'relative bg-gradient-to-r from-blue-500 via-blue-500 to-purple-500 bg-clip-text text-transparent'}>wygodnej pracy</span>
                                     <br/>
-                                    w służbie zdrowia
+                                    w ochronie zdrowia
                                 </h2>
                                 <p className="mb-8 mt-6 text-center text-gray-600 dark:text-gray-300">Zostań na bieżąco z naszymi
                                     aktualizacjami! Wpisz swój adres e-mail, aby być pierwszym, który otrzyma
