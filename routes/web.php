@@ -5,9 +5,8 @@ use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
 use App\Actions\Shift\ShowShiftList;
-use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EmployerAccess;
-use Illuminate\Foundation\Application;
+use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Actions\Employer;
@@ -68,6 +67,9 @@ Route::post('employer/register', Employer\Register::class);
 Route::get('/landing', function () {
     return Inertia::render('Landing/Index');
 });
+
+Route::post('/landing', \App\Actions\Landing\CreateLead::class)
+    ->name('landing.lead.create');
 
 
 
