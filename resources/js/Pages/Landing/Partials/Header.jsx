@@ -7,7 +7,7 @@ export const Header = () => {
                     <div className="relative flex flex-wrap items-center justify-between gap-6 lg:gap-0 lg:py-4">
                         <div className="relative z-20 flex w-full justify-between md:px-0 lg:w-max">
                             <a href="/" aria-label="logo" className="flex items-center space-x-2">
-                                <h2 className={'text-2xl font-semibold'}>MedShifts</h2>
+                                <img className={'w-full h-20'} src={'./images/logo.png'}/>
                             </a>
 
                             <button aria-label="humburger" id="hamburger" className="relative -mr-6 p-6 lg:hidden">
