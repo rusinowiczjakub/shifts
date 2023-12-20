@@ -6,8 +6,8 @@ export const Header = () => {
                 <div className="mx-auto px-4 sm:px-12 xl:max-w-6xl xl:px-0">
                     <div className="relative flex flex-wrap items-center justify-between gap-6 lg:gap-0 lg:py-4">
                         <div className="relative z-20 flex w-full justify-between md:px-0 lg:w-max">
-                            <a href="/" aria-label="logo" className="flex items-center space-x-2">
-                                <img className={'w-full h-20'} src={'./images/logo.png'}/>
+                            <a href="/" aria-label="logo" className="flex items-center py-2 space-x-2">
+                                <img className={'w-12 h-12'} src={'./images/logo.png'}/>
                             </a>
 
                             <button aria-label="humburger" id="hamburger" className="relative -mr-6 p-6 lg:hidden">
