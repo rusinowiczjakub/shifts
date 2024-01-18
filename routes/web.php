@@ -5,6 +5,11 @@ use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
 use App\Actions\Shift\ShowShiftList;
+use App\Actions\Staff\CreateAccount;
+use App\Actions\Staff\ProfileStepExperience;
+use App\Actions\Staff\ProfileStepProfessionalTypes;
+use App\Actions\Staff\Register;
+use App\Actions\Staff\UpdateProfessionalTypes;
 use App\Http\Middleware\EmployerAccess;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +45,14 @@ Route::prefix('employer')
         Route::post('/settings/address', Employer\CreateAddress::class)->name('settings.address.create');
     });
 
+Route::prefix('staff')
+    ->group(function () {
+        Route::get('/register', Register::class)->name('staff.register');
+        Route::post('/create', CreateAccount::class)->name('staff.account.create');
+        Route::get('/onboarding/step-1', ProfileStepProfessionalTypes::class)->name('staff.wizzard.step-1');
+        Route::post('/profile/professional-types', UpdateProfessionalTypes::class)->name('staff.profile.professional-types');
+        Route::get('/onboarding/step-2', ProfileStepExperience::class)->name('staff.wizzard.step-2');
+    });
 //Route::prefix('jobboard')
 //    ->group(function () {
 //        Route::get('/', Index::class);

@@ -26,7 +26,8 @@ function CompanySettings({institution}) {
         post(route('settings.company.update'), {
             onSuccess: () => {
                 console.log('updated')
-            }
+            },
+            preserveScroll: true
         })
     }
 

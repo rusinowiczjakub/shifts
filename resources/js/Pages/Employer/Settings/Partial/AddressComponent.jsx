@@ -25,7 +25,8 @@ const AddressComponent = ({address = null, editMode = false, createMode = false,
                 onSuccess: () => {
                     console.log('updated')
                     onEdition(null)
-                }
+                },
+                preserveScroll: true
             })
 
             return;

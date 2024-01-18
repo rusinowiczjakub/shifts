@@ -40,6 +40,6 @@ class UpdateCompanyProfile
         $institution->save();
         $institutionAddress->save();
 
-        return Redirect::route('settings.index');
+        return Redirect::route('settings.index')->with('message', trans('message.saved'));
     }
 }

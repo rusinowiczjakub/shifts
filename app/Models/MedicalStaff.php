@@ -5,25 +5,24 @@ namespace App\Models;
 use App\Models\Concerns\HasAddresses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Parental\HasParent;
 
-class MedicalStaff extends Model
+/**
+ * @property MedicalStaffProfile $profile
+ */
+class MedicalStaff extends User
 {
     use HasFactory,
-        HasAddresses;
+        HasAddresses,
+        HasParent;
 
-    protected $fillable = [
-        'name',
-        'surname',
-        'email',
-        'password'
-    ];
-
-    public function professionalTypes(): BelongsToMany
+    public function profile(): HasOne
     {
-        return $this->belongsToMany(
-            ProfessionalType::class,
-            'medical_staff_professional_types',
+        return $this->hasOne(
+            MedicalStaffProfile::class,
         );
     }
 }

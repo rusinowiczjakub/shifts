@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medical_staff', function (Blueprint $table) {
+        Schema::create('job_experiences', function (Blueprint $table) {
             $table->id();
-            $table->text('bio')->nullable();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->timestamps();
-        });
-
-        Schema::create('medical_staff_professional_types', function (Blueprint $table) {
+            $table->text('company');
+            $table->timestamp('period_start');
+            $table->timestamp('period_end');
+            $table->text('description');
             $table->foreignId('medical_staff_id')->references('id')->on('medical_staff');
-            $table->unsignedBigInteger('professional_type_id');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medical_staff');
+        Schema::dropIfExists('job_experiences');
     }
 };

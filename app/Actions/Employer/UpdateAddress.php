@@ -25,6 +25,6 @@ class UpdateAddress
 
         $address->save();
 
-        return Redirect::route('settings.index', ['']);
+        return Redirect::route('settings.index', [''])->with('message', trans('message.saved'));
     }
 }
