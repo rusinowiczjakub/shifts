@@ -6,12 +6,16 @@ use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
 use App\Actions\Shift\ShowShiftList;
 use App\Actions\Staff\CreateAccount;
-use App\Actions\Staff\ProfileStepExperience;
+use App\Actions\Staff\Login as LoginStaff;
+use App\Actions\Staff\ProfileStepBasicInfo;
 use App\Actions\Staff\ProfileStepProfessionalTypes;
 use App\Actions\Staff\Register;
 use App\Actions\Staff\UpdateProfessionalTypes;
+use App\Actions\Staff\UpdateBasicInfo;
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EmployerAccess;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\StaffAccess;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Actions\Employer;
@@ -32,9 +36,7 @@ Route::prefix('employer')
     ->group(function () {
         Route::get('/dashboard', function () {
             return Inertia::render('Employer/Dashboard');
-        })
-            ->name('employer.dashboard');
-
+        })->name('employer.dashboard');
         Route::get('/shift', ShowShiftList::class)->name('shift.list');
         Route::post('/shift', CreateShift::class)->name('shift.create');
         Route::get('/shift/{shiftId}/applications/', ShowShiftApplications::class)->name('shift.applications');
@@ -46,22 +48,27 @@ Route::prefix('employer')
     });
 
 Route::prefix('staff')
+    ->name('staff.')
     ->group(function () {
-        Route::get('/register', Register::class)->name('staff.register');
-        Route::post('/create', CreateAccount::class)->name('staff.account.create');
-        Route::get('/onboarding/step-1', ProfileStepProfessionalTypes::class)->name('staff.wizzard.step-1');
-        Route::post('/profile/professional-types', UpdateProfessionalTypes::class)->name('staff.profile.professional-types');
-        Route::get('/onboarding/step-2', ProfileStepExperience::class)->name('staff.wizzard.step-2');
+        Route::get('/dashboard', function () {
+            return Inertia::render('Staff/Dashboard');
+        })->name('dashboard');
+        Route::get('/login', function () {
+            return Inertia::render('Staff/Login');
+        })->name('login');
+        Route::post('/login', LoginStaff::class)->name('login');
+        Route::get('/register', Register::class)->name('register');
+        Route::post('/create', CreateAccount::class)->name('account.create');
+        Route::middleware(['auth', StaffAccess::class])->group(function () {
+            Route::get('/onboarding/step-1', ProfileStepProfessionalTypes::class)->name('wizzard.step-1');
+            Route::post('/profile/professional-types', UpdateProfessionalTypes::class)->name('profile.professional-types');
+            Route::get('/onboarding/step-2', ProfileStepBasicInfo::class)->name('wizzard.step-2');
+            Route::post('/profile/basic', UpdateBasicInfo::class)->name('profile.basic');
+            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        });
     });
-//Route::prefix('jobboard')
-//    ->group(function () {
-//        Route::get('/', Index::class);
-//    });
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // EMPLOYER AUTH
 Route::get('employer/login', function () {
     return Inertia::render('Employer/Auth/Login');
@@ -93,12 +100,6 @@ Route::post('/', \App\Actions\Landing\CreateLead::class)
 //        'laravelVersion' => Application::VERSION,
 //        'phpVersion' => PHP_VERSION,
 //    ]);
-//});
-
-//Route::middleware('auth')->group(function () {
-//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 //});
 
 require __DIR__.'/auth.php';

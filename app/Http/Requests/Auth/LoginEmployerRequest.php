@@ -2,14 +2,17 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\Enums\UserType;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+class LoginEmployerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +30,14 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                Rule::exists('users')->where(function (Builder $query) {
+                    return $query->where('type', UserType::EMPLOYER->value);
+                })
+            ],
             'password' => ['required', 'string'],
         ];
     }

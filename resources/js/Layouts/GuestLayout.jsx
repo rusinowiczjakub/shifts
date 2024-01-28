@@ -3,7 +3,7 @@ import {Link} from '@inertiajs/react';
 
 export default function Guest({children}) {
     return (
-        <div>
+        <div className={'bg-[#F5F5F5]'}>
             {children}
         </div>
     );

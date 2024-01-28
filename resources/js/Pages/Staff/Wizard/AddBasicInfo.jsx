@@ -1,26 +1,38 @@
 import GuestLayout from "@/Layouts/GuestLayout";
 import {Logo} from "@/Components/Logo";
-import InputLabel from "@/Components/InputLabel";
-import TextInput from "@/Components/TextInput";
-import InputError from "@/Components/InputError";
-import {Loader} from "@/Components/Loader";
-import {CheckboxCardGroup} from "@/Components/CheckboxCardGroup";
-import {CheckboxCard} from "@/Components/CheckboxCard";
 import {useForm} from "@inertiajs/react";
+import {Combobox} from "@headlessui/react";
+import {useEffect, useState} from "react";
+import TextInput from "@/Components/TextInput";
+import InputLabel from "@/Components/InputLabel";
+import InputError from "@/Components/InputError";
+import {Textarea} from "flowbite-react";
+import {Loader} from "@/Components/Loader";
 
-export default function AddProfessionalTypes({professionalTypes}) {
-    const {data, setData, post, processing, errors, reset} = useForm({
-        professionalTypes: []
+export default function AddBasicInfo() {
+    const [cities, setCities] = useState([]);
+    const {data, setData, post, transform, processing, errors, reset} = useForm({
+        name: '',
+        bio: '',
+        city: null
     })
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('staff.profile.professional-types'), {
-            onSuccess: () => {
-                console.log('updated');
-            },
-            preserveScroll: true
-        })
+        transform((data) => ({
+            ...data,
+            city: data.city.id
+        }));
+        post(route('staff.profile.basic'))
+    }
+
+    const loadCities = async (cityName) => {
+        const citiesReq = await fetch(route('dictionary.cities', {cityName: cityName}), {
+            method: 'GET'
+        });
+
+        setCities(await citiesReq.json());
+
     }
 
     return (
@@ -34,29 +46,74 @@ export default function AddProfessionalTypes({professionalTypes}) {
                                 className={'text-blue-600'}>MedShifts</span></h1>
 
                             <h1 className="mt-4 mb-4 text-2xl font-medium text-gray-800 lg:text-3xl dark:text-white">
-                                Krok 1 - informacje dotyczące Twojej specjalizacji
+                                Krok 2 - Powiedz nam coś o sobie
                             </h1>
                             <div className={'text-gray-600'}>
                                 <p>
-                                    Wybierz specjalizacje którymi się zajmujesz dzięki temu <br/>
-                                    będziemy mogli dopasować idealne dla Ciebie zmiany, <br/>
-                                    a placówki medyczne będą wiedziały, że idealnie wpasowujesz się <br/>
-                                    w profil którego poszukują.
+                                    Uzupełnij swoje imię i nazwisko oraz lokalizację w jakiej<br/>
+                                    interesują Cię propozycje zawodowe.
                                 </p>
                             </div>
                         </div>
 
                         <div className="mt-8 lg:w-1/2 lg:mt-0 flex items-center justify-center">
                             <form onSubmit={submit} className="w-full lg:max-w-xl">
-                                <CheckboxCardGroup
-                                    onChange={(data) => setData('professionalTypes', data)}
-                                    value={data.professionalTypes}
-                                >
-                                    {professionalTypes.map(
-                                        (type) => <CheckboxCard value={type.id} label={type.name}/>
-                                    )}
-                                </CheckboxCardGroup>
+                                <div className={'mb-4'}>
+                                    <Combobox
+                                        value={data.city}
+                                        as={'div'}
+                                        className={'relative flex flex-col w-full'}
+                                        onChange={(value) => setData('city', value)}>
+                                        <Combobox.Label as={'label'}
+                                                        class="block font-medium text-sm text-gray-700 dark:text-gray-300 ">Miasto</Combobox.Label>
+                                        <Combobox.Input
+                                            displayValue={(city) => city?.name}
+                                            autocomplete={'off'}
+                                            className={'mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm '}
+                                            as={'input'}
+                                            onChange={(event) => loadCities(event.target.value)}/>
+                                        <Combobox.Options
+                                            as={'div'}
+                                            className={'w-full absolute z-50 bg-white top-[4.5rem] border-1 border-gray-300 shadow rounded-md'}
+                                        >
+                                            {cities.map((city) => (
+                                                <Combobox.Option
+                                                    className={'cursor-pointer list-none group hover:bg-blue-600 hover:text-white rounded-md py-2 px-4'}
+                                                    key={city.id} value={city}>
+                                                    {city.name}, <span
+                                                    className={'text-sm text-gray-500 group-hover:text-gray-200'}>{city.province.name}</span>
+                                                </Combobox.Option>
+                                            ))}
+                                        </Combobox.Options>
+                                    </Combobox>
+                                </div>
+                                <div className={'mb-4'}>
+                                    <InputLabel htmlFor="name" value="Imię i nazwisko"/>
 
+                                    <TextInput
+                                        id="name"
+                                        name="name"
+                                        value={data.name}
+                                        className="mt-1 block w-full"
+                                        autoComplete="name"
+                                        isFocused={true}
+                                        onChange={(e) => setData('name', e.target.value)}
+                                        required
+                                    />
+
+                                    <InputError message={errors.name} className="mt-2"/>
+                                </div>
+                                <div className={'mb-4'}>
+                                    <InputLabel htmlFor="bio" value="Bio"/>
+
+                                    <textarea id="bio" rows="4"
+                                              onChange={(e) => setData('bio', e.target.value)}
+                                              className="block p-2.5 w-full resize-none text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                              placeholder="Napisz kilka słów o sobie..."></textarea>
+
+
+                                    <InputError message={errors.bio} className="mt-2"/>
+                                </div>
                                 <div className="mt-8 md:flex md:items-center">
                                     <button type={'submit'}
                                             className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
@@ -66,7 +123,7 @@ export default function AddProfessionalTypes({professionalTypes}) {
                                         }
                                         {
                                             !processing &&
-                                            'Następny krok'
+                                            'Przejdź do profilu'
                                         }
 
                                     </button>

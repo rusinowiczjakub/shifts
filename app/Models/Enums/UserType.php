@@ -7,5 +7,5 @@ namespace App\Models\Enums;
 enum UserType: string
 {
     case EMPLOYER = 'EMPLOYER';
-    case MEDICAL_STAFF = 'MEDICAL_STAFF';
+    case MEDICAL_STAFF = 'STAFF';
 }

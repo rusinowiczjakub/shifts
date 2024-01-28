@@ -1,21 +1,25 @@
-import GuestLayout from "@/Layouts/GuestLayout";
-import {Logo} from "@/Components/Logo";
+import GuestLayout from '@/Layouts/GuestLayout';
+import {Head, useForm} from '@inertiajs/react';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
+import {Logo} from "@/Components/Logo";
 import {Loader} from "@/Components/Loader";
-import {CheckboxCardGroup} from "@/Components/CheckboxCardGroup";
-import {CheckboxCard} from "@/Components/CheckboxCard";
-import {useForm} from "@inertiajs/react";
-import {useEffect} from 'react';
 
-export default function AddProfessionalTypes({professionalTypes}) {
+export default function Register() {
     const {data, setData, post, processing, errors, reset} = useForm({
-        professionalTypes: []
+        email: '',
+        password: '',
     })
 
-    const submit = () => {
-        post('')
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('staff.login'), {
+            onSuccess: () => {
+                console.log('logged in');
+            },
+            preserveScroll: true
+        })
     }
 
     return (
@@ -29,17 +33,61 @@ export default function AddProfessionalTypes({professionalTypes}) {
                                 className={'text-blue-600'}>MedShifts</span></h1>
 
                             <h1 className="mt-4 mb-4 text-2xl font-medium text-gray-800 lg:text-3xl dark:text-white">
-                                Krok 2 - informacje dotyczące Twojego doświadczenia
+                                Logowanie
                             </h1>
                             <div className={'text-gray-600'}>
-                                <p>
-                                    Uzupełnij swoje doświadczenie...<br/>
-                                </p>
+                                <p>Twoje furtka do elastycznego świata medycyny. <br/> Zaloguj się i pracuj elastycznie.</p>
                             </div>
                         </div>
 
-                        <div className="mt-8 lg:w-1/2 lg:mt-0 flex items-center justify-center">
+                        <div className="mt-8 lg:w-1/2 lg:mt-0">
+                            <form onSubmit={submit} className="w-full lg:max-w-xl">
+                                <div className={'mb-4'}>
+                                    <InputLabel htmlFor="name" value="Adres email"/>
 
+                                    <TextInput
+                                        id="email"
+                                        name="email"
+                                        value={data.email}
+                                        onChange={(e) => setData('email', e.target.value)}
+                                        className="mt-1 block w-full"
+                                        autoComplete="email"
+                                        required
+                                    />
+
+                                    <InputError message={errors.email} className="mt-2"/>
+                                </div>
+
+                                <div className={'mb-4'}>
+                                    <InputLabel htmlFor="password" value="Hasło"/>
+
+                                    <TextInput
+                                        id="password"
+                                        name="password"
+                                        value={data.password}
+                                        onChange={(e) => setData('password', e.target.value)}
+                                        className="mt-1 block w-full"
+                                        required
+                                        type={'password'}
+                                    />
+
+                                    <InputError message={errors.password} className="mt-2"/>
+                                </div>
+                                <div className="mt-8 md:flex md:items-center">
+                                    <button type={'submit'}
+                                            className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                        {
+                                            processing &&
+                                            <Loader/>
+                                        }
+                                        {
+                                            !processing &&
+                                            'Zaloguj się'
+                                        }
+
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 

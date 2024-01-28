@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('dictionary')
+    ->name('dictionary.')
+    ->group(function () {
+        Route::get('cities', \App\Actions\Utils\GetCities::class)->name('cities');
+    });
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

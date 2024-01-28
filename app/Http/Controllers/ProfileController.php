@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\MedicalStaff;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,8 +19,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        /** @var MedicalStaff $user */
+        $user = $request->user();
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
+            'medicalStaffProfile' => $user->profile()->with(['skills', 'experiences', 'city'])->first(),
             'status' => session('status'),
         ]);
     }
@@ -37,7 +41,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('staff.profile.edit');
     }
 
     /**

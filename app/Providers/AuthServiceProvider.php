@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Employer;
+use App\Models\MedicalStaff;
 use App\Models\Team;
 use App\Models\User;
 use App\Policies\TeamPolicy;
@@ -30,6 +31,10 @@ class AuthServiceProvider extends ServiceProvider
         //
         Gate::define('access-employer-zone', function (User $user) {
             return $user instanceof Employer;
+        });
+
+        Gate::define('access-staff-zone', function (User $user) {
+            return $user instanceof MedicalStaff;
         });
     }
 }

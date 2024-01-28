@@ -6,9 +6,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property GeoCommunity $city
+ */
 class MedicalStaffProfile extends Model
 {
     use HasTimestamps;
@@ -16,7 +20,8 @@ class MedicalStaffProfile extends Model
     protected $table = 'medical_staff';
 
     protected $fillable = [
-        'user_id'
+        'user_id',
+        'bio'
     ];
 
     public function professionalTypes(): BelongsToMany
@@ -30,11 +35,16 @@ class MedicalStaffProfile extends Model
 
     public function experiences(): HasMany
     {
-        return $this->hasMany(JobExperience::class);
+        return $this->hasMany(JobExperience::class, 'medical_staff_id');
     }
 
     public function skills(): HasMany
     {
-        return $this->hasMany(Skill::class);
+        return $this->hasMany(Skill::class, 'medical_staff_id');
+    }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(GeoCommunity::class, 'geo_community_id');
     }
 }
