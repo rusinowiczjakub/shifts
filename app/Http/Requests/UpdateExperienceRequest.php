@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Staff;
+namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfessionalTypesRequest extends FormRequest
+class UpdateExperienceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -17,12 +18,15 @@ class UpdateProfessionalTypesRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
         return [
-            'professionalTypes' => ['required', 'min:1', 'exists:professional_types,id']
+            'company' => ['required'],
+            'period_start' => ['required'],
+            'period_end' => ['nullable', 'after:period_start'],
+            'description' => ['required']
         ];
     }
 }

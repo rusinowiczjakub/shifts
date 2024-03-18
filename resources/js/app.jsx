@@ -11,9 +11,14 @@ import { Flowbite } from 'flowbite-react';
 const customTheme = {
     button: {
         color: {
-            primary: 'bg-primary-700',
+            primary: 'bg-blue-700',
         },
     },
+    // input: {
+    //     color: {
+    //         primary: 'bg-blue-600 ring-blue-600'
+    //     }
+    // }
 };
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';

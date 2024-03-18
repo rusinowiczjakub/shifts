@@ -16,7 +16,9 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('staff.profile.update'));
+        patch(route('staff.profile.update'), {
+            preserveScroll: true
+        });
     };
 
     return (
@@ -36,7 +38,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="name"
                         className="mt-1 block w-full"
-                        value={data.name}
+                        value={data.name ?? ''}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                         isFocused

@@ -23,11 +23,13 @@
     },
     "dependencies": {
         "@inertiajs/react": "^1.0.2",
-        "date-fns": "^2.29.3",
+        "date-fns": "^2.30.0",
         "flowbite": "^1.6.4",
+        "flowbite-datepicker": "^1.2.6",
         "flowbite-react": "^0.7.0",
         "lodash": "^4.17.21",
         "nprogress": "^0.2.0",
+        "react-dropzone": "^14.2.3",
         "react-router": "^6.10.0",
         "react-router-dom": "^6.10.0"
     }

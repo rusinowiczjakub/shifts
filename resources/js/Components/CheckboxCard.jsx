@@ -2,7 +2,6 @@ import {CheckCircle} from "@/Components/Icons/CheckCircle";
 import {useState} from "react";
 
 export const CheckboxCard = ({value, label, onClick, selected}) => {
-    console.log(selected);
     return (
         <div
             onClick={() => onClick(value)}

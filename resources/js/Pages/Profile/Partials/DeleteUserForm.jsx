@@ -98,7 +98,7 @@ export default function DeleteUserForm({ className }) {
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                        <button onClick={closeModal}
+                        <button type={'button'} onClick={closeModal}
                                 disabled={processing}
                                 className="flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 transform bg-white mr-2 text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-gray-800 focus:ring-opacity-50">
                             {

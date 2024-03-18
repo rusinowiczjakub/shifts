@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Staff;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProfessionalTypesRequest extends FormRequest
+class UpdateSkillsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,9 @@ class UpdateProfessionalTypesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'professionalTypes' => ['required', 'min:1', 'exists:professional_types,id']
+            'name' => ['required'],
+            'description' => ['required'],
+            'files' => ['sometimes', 'nullable', 'file', 'mimes:jpg,png,pdf']
         ];
     }
 }

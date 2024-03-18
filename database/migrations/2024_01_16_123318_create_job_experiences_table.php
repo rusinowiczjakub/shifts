@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->text('company');
             $table->timestamp('period_start');
-            $table->timestamp('period_end');
+            $table->timestamp('period_end')->nullable();
             $table->text('description');
             $table->foreignId('medical_staff_id')->references('id')->on('medical_staff');
         });

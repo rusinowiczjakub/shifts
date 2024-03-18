@@ -5,8 +5,11 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import {Head} from '@inertiajs/react';
 import {Tab} from '@headlessui/react';
 import UpdateSkillsForm from "@/Pages/Profile/Partials/UpdateSkillsForm";
+import UpdateExperienceForm from "@/Pages/Profile/Partials/UpdateExperienceForm";
+import UpdateProfessionalTypeForm from "@/Pages/Profile/Partials/UpdateProfessionalTypeForm";
+import AddBasicInfoForm from "@/Pages/Profile/Partials/AddBasicInfoForm";
 
-export default function Edit({auth, mustVerifyEmail, medicalStaffProfile, status}) {
+export default function Edit({auth, mustVerifyEmail, medicalStaffProfile, status, professionalTypes, userProfessionalTypes}) {
     return (
         <AuthenticatedLayout
             auth={auth}
@@ -53,7 +56,16 @@ export default function Edit({auth, mustVerifyEmail, medicalStaffProfile, status
                         <div className={'py-12'}>
                             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                                 <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                                    <AddBasicInfoForm profile={medicalStaffProfile} user={auth.user}/>
+                                </div>
+                                <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                                    <UpdateProfessionalTypeForm professionalTypes={professionalTypes} userProfessionalTypes={userProfessionalTypes}/>
+                                </div>
+                                <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                                     <UpdateSkillsForm skills={medicalStaffProfile.skills} className={'max-w-xl'}/>
+                                </div>
+                                <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                                    <UpdateExperienceForm experiences={medicalStaffProfile.experiences} className={'max-w-xl'}/>
                                 </div>
                             </div>
                         </div>
