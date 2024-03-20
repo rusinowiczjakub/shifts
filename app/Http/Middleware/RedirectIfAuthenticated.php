@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Employer;
+use App\Models\MedicalStaff;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -19,10 +21,19 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
+        /** @var MedicalStaff|Employer $user */
+        $user = Auth::user();
         foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+            if ($user instanceof MedicalStaff) {
+                return redirect(route('staff.profile.edit'));
             }
+
+            if ($user instanceof Employer) {
+                return redirect(route('employer.dashboard'));
+            }
+//            if (Auth::guard($guard)->check()) {
+//                return redirect(RouteServiceProvider::HOME);
+//            }
         }
 
         return $next($request);

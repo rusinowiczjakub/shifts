@@ -1,20 +1,15 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import TextInput from "@/Components/TextInput";
 
-const OTPInput = ({ length = 4, onComplete, className = '' }) => {
-    const [OTP, setOTP] = useState(Array(length).fill(''));
-
+const OTPInput = ({ length = 4, value, onChange, onComplete, className = '' }) => {
     const inputRef = useRef(Array(length).fill(null));
 
-
     const handleTextChange = (input, index) => {
-        const newPin = [...OTP];
+        const newPin = [...value];
         newPin[index] = input;
-        setOTP(newPin);
+        onChange(newPin);
 
         // check if the user has entered the first digit, if yes, automatically focus on the next input field and so on.
-
-
         if (input.length === 1 && index < length - 1) {
             inputRef.current[index + 1]?.focus();
         }
@@ -25,6 +20,7 @@ const OTPInput = ({ length = 4, onComplete, className = '' }) => {
 
         if (newPin.every((digit) => digit !== '')) {
             onComplete(newPin.join(''));
+            inputRef.current[0].focus();
         }
     };
 
@@ -34,12 +30,13 @@ const OTPInput = ({ length = 4, onComplete, className = '' }) => {
                 <TextInput
                     key={index}
                     type="text"
+                    inputMode={'numeric'}
                     maxLength={1}
-                    value={OTP[index]}
+                    value={value[index]}
                     className={'w-16 md:w-32 text-center'}
                     onChange={(e) => handleTextChange(e.target.value, index)}
                     ref={(ref) => (inputRef.current[index] = ref)}
-                    style={{ marginRight: index === length - 1 ? '0' : '10px' }}
+                    style={{ marginRight: index === length - 1 ? '0' : '10px', WebkitAppearance: "none", MozAppearance: 'textfield' }}
                 />
             ))}
 

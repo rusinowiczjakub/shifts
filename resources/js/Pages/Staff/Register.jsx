@@ -27,7 +27,7 @@ export default function Register() {
     return (
         <GuestLayout>
             <section className="bg-white dark:bg-gray-900 h-screen flex items-center">
-                <div className="container px-6 py-24 mx-auto lg:py-32">
+                <div className="container px-6 py-24 pt-32 md:pt-0 mx-auto lg:py-32">
                     <div className="lg:flex">
                         <div className="lg:w-1/2">
                             <Logo/>
@@ -56,7 +56,6 @@ export default function Register() {
                                         onChange={(e) => setData('email', e.target.value)}
                                         className="mt-1 block w-full"
                                         autoComplete="email"
-                                        required
                                     />
 
                                     <InputError message={errors.email} className="mt-2"/>
@@ -71,7 +70,6 @@ export default function Register() {
                                         value={data.password}
                                         onChange={(e) => setData('password', e.target.value)}
                                         className="mt-1 block w-full"
-                                        required
                                         type={'password'}
                                     />
 
@@ -87,7 +85,6 @@ export default function Register() {
                                         value={data.password_confirmation}
                                         onChange={(e) => setData('password_confirmation', e.target.value)}
                                         className="mt-1 block w-full"
-                                        required
                                         type={'password'}
                                     />
 

@@ -9,7 +9,6 @@ import {Logo} from "@/Components/Logo";
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
-    console.log(route().current())
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
@@ -23,9 +22,9 @@ export default function Authenticated({ auth, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink className={'relative'} href={route('staff.dashboard')} active={route().current('staff.dashboard')}>
-                                    Dashboard
-                                </NavLink>
+                                {/*<NavLink className={'relative'} href={route('staff.dashboard')} active={route().current('staff.dashboard')}>*/}
+                                {/*    Dashboard*/}
+                                {/*</NavLink>*/}
                                 <NavLink className={'relative'} href={'#'} active={route().current('staff.shifts')}>
                                     Twoje zmiany
                                     <span
@@ -101,9 +100,9 @@ export default function Authenticated({ auth, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('staff.dashboard')} active={route().current('staff.dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
+                        {/*<ResponsiveNavLink href={route('staff.dashboard')} active={route().current('staff.dashboard')}>*/}
+                        {/*    Dashboard*/}
+                        {/*</ResponsiveNavLink>*/}
                         <ResponsiveNavLink href={'#'} active={route().current('staff.shifts')}>
                             Twoje zmiany
                             <span

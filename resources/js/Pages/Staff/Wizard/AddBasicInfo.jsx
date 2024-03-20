@@ -38,7 +38,7 @@ export default function AddBasicInfo() {
     return (
         <GuestLayout>
             <section className="bg-white dark:bg-gray-900 h-screen flex items-center">
-                <div className="container px-6 py-24 mx-auto lg:py-32">
+                <div className="container px-6 pt-32 md:pt-0 mx-auto lg:py-32">
                     <div className="lg:flex">
                         <div className="lg:w-1/2">
                             <Logo/>
@@ -96,7 +96,6 @@ export default function AddBasicInfo() {
                                         value={data.name}
                                         className="mt-1 block w-full"
                                         autoComplete="name"
-                                        isFocused={true}
                                         onChange={(e) => setData('name', e.target.value)}
                                         required
                                     />

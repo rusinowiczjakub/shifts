@@ -5,19 +5,22 @@ namespace App\Rules;
 use App\Models\VerificationCode;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Support\Str;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class VerifyCode implements ValidationRule
 {
     public function __construct(
         private readonly string $email
-    )
-    {
+    ) {
     }
 
     /**
      * Run the validation rule.
      *
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param string                                        $attribute
+     * @param mixed                                         $value
+     * @param \Closure(string): PotentiallyTranslatedString $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
@@ -25,15 +28,15 @@ class VerifyCode implements ValidationRule
         $verificationCode = VerificationCode::where('email', $this->email)->first();
 
         if (null === $verificationCode) {
-            $fail('The :attribute is invalid');
+            $fail(Str::ucfirst(__('validation.verify-code.invalid')));
         }
 
         if ($verificationCode->isExpired()) {
-            $fail('The :attribute has expired');
+            $fail(Str::ucfirst(__('validation.verify-code.expired')));
         }
 
         if (!$verificationCode->isValid($value)) {
-            $fail('The :attribute is invalid');
+            $fail(Str::ucfirst(__('validation.verify-code.invalid')));
         }
     }
 }

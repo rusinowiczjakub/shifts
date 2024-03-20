@@ -64,14 +64,17 @@ Route::prefix('staff')
         Route::get('/dashboard', function () {
             return Inertia::render('Staff/Dashboard');
         })->name('dashboard');
-        Route::get('/login', function () {
-            return Inertia::render('Staff/Login');
-        })->name('login');
-        Route::post('/login', LoginStaff::class)->name('login');
-        Route::get('/register', Register::class)->name('register');
-        Route::post('/create', CreateAccount::class)->name('account.create');
-        Route::middleware(['auth', StaffAccess::class])->group(function () {
 
+        Route::middleware('guest')->group(function () {
+            Route::get('/login', function () {
+                return Inertia::render('Staff/Login');
+            })->name('login');
+            Route::post('/login', LoginStaff::class)->name('login');
+            Route::get('/register', Register::class)->name('register');
+            Route::post('/create', CreateAccount::class)->name('account.create');
+        });
+
+        Route::middleware(['auth', StaffAccess::class])->group(function () {
             Route::middleware(['verified'])->group(function () {
                 Route::get('/onboarding/step-1', ProfileStepProfessionalTypes::class)->name('wizzard.step-1');
                 Route::post('/profile/professional-types', UpdateProfessionalTypes::class)->name('profile.professional-types');

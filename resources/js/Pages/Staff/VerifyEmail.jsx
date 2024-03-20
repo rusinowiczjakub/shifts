@@ -12,6 +12,8 @@ export default function VerifyEmail() {
         code: '',
     })
 
+    const [code, setCodeValue] = useState(Array(4).fill(''));
+
     const [timer, setTimer] = useState(0);
     const timeOutCallback = useCallback(() => setTimer(currTimer => currTimer - 1), []);
 
@@ -28,7 +30,11 @@ export default function VerifyEmail() {
     const submit = () => {
         const routeParams = new URLSearchParams(document.location.search);
 
-        post(route('staff.verify-email', {redirectTo: routeParams.get('redirectTo')}))
+        post(route('staff.verify-email', {redirectTo: routeParams.get('redirectTo')}), {
+            onError: () => {
+                setCodeValue(Array(4).fill(''));
+            }
+        })
     }
 
     const setCode = (value) => {
@@ -75,7 +81,7 @@ export default function VerifyEmail() {
                                 <div className={'mb-4'}>
                                     <InputLabel htmlFor="name" value="Kod aktywacyjny"/>
 
-                                    <OTPInput className={'mt-2'} onComplete={(v) => {
+                                    <OTPInput value={code} onChange={(value) => setCodeValue(value)} className={'mt-2'} onComplete={(v) => {
                                         setCode(v)
                                         submit();
                                     }}/>
