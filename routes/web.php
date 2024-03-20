@@ -1,5 +1,7 @@
 <?php
 
+use App\Actions\Auth\ResendVerificationCode;
+use App\Actions\Auth\VerifyEmail;
 use App\Actions\JobBoard\Index;
 use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
@@ -20,6 +22,7 @@ use App\Actions\Staff\UpdateBasicInfo;
 use App\Actions\Staff\UpdateProfileProfessionalTypes;
 use App\Actions\Staff\UpdateSkill;
 use App\Actions\Staff\UpdateSkills;
+use App\Actions\Staff\VerifyEmailPage;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EmployerAccess;
 use App\Http\Middleware\HandleInertiaRequests;
@@ -68,22 +71,28 @@ Route::prefix('staff')
         Route::get('/register', Register::class)->name('register');
         Route::post('/create', CreateAccount::class)->name('account.create');
         Route::middleware(['auth', StaffAccess::class])->group(function () {
-            Route::get('/onboarding/step-1', ProfileStepProfessionalTypes::class)->name('wizzard.step-1');
-            Route::post('/profile/professional-types', UpdateProfessionalTypes::class)->name('profile.professional-types');
-            Route::get('/onboarding/step-2', ProfileStepBasicInfo::class)->name('wizzard.step-2');
-            Route::post('/profile/basic', UpdateBasicInfo::class)->name('profile.basic');
-            Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-            Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-            Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-            Route::post('/profile/skills', UpdateSkills::class)->name('profile.skills.create');
-            Route::post('/profile/skills/{skill}', UpdateSkill::class)->name('profile.skills.update');
-            Route::delete('/profile/skills/media/{media}', DeleteSkillMedia::class)->name('profile.skill.media.delete');
-            Route::delete('/profile/skills/{skill}', DeleteSkill::class)->name('profile.skill.delete');
-            Route::post('/profile/experience', CreateExperience::class)->name('profile.experience.create');
-            Route::post('/profile/experience/{experience}', UpdateExperience::class)->name('profile.experience.update');
-            Route::delete('/profile/experience/{experience}', DeleteExperience::class)->name('profile.experience.delete');
-            Route::put('/profile/professional-types', UpdateProfileProfessionalTypes::class)->name('profile.professional-types.update');
-//            Route::post('/profile/experience/{experience}', UpdateSkill::class)->name('profile.skills.update');
+
+            Route::middleware(['verified'])->group(function () {
+                Route::get('/onboarding/step-1', ProfileStepProfessionalTypes::class)->name('wizzard.step-1');
+                Route::post('/profile/professional-types', UpdateProfessionalTypes::class)->name('profile.professional-types');
+                Route::get('/onboarding/step-2', ProfileStepBasicInfo::class)->name('wizzard.step-2');
+                Route::post('/profile/basic', UpdateBasicInfo::class)->name('profile.basic');
+                Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+                Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+                Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+                Route::post('/profile/skills', UpdateSkills::class)->name('profile.skills.create');
+                Route::post('/profile/skills/{skill}', UpdateSkill::class)->name('profile.skills.update');
+                Route::delete('/profile/skills/media/{media}', DeleteSkillMedia::class)->name('profile.skill.media.delete');
+                Route::delete('/profile/skills/{skill}', DeleteSkill::class)->name('profile.skill.delete');
+                Route::post('/profile/experience', CreateExperience::class)->name('profile.experience.create');
+                Route::post('/profile/experience/{experience}', UpdateExperience::class)->name('profile.experience.update');
+                Route::delete('/profile/experience/{experience}', DeleteExperience::class)->name('profile.experience.delete');
+                Route::put('/profile/professional-types', UpdateProfileProfessionalTypes::class)->name('profile.professional-types.update');
+            });
+
+            Route::get('/auth/verify-email', VerifyEmailPage::class)->name('verify-email.page');
+            Route::post('/auth/verify-email', VerifyEmail::class)->name('verify-email');
+            Route::post('/auth/verify-email/resend', ResendVerificationCode::class)->name('verify-email.resend');
         });
     });
 // EMPLOYER AUTH

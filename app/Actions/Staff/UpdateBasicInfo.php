@@ -27,6 +27,8 @@ class UpdateBasicInfo
         $user->profile->city()->associate($request->city);
         $user->profile->update(['bio' => $request->bio]);
 
+        $user->finishOnboarding();
+
         return Redirect::route('staff.profile.edit');
     }
 }

@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Mail\VerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Parental\HasChildren;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -31,7 +33,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'type'
+        'type',
+        'onboarding_finished_at'
     ];
 
     /**
@@ -53,6 +56,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'onboarding_finished_at' => 'datetime'
     ];
 
     /**
@@ -72,5 +76,20 @@ class User extends Authenticatable
     public function institution(): HasOne
     {
         return $this->hasOne(Institution::class);
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        VerificationCode::where('email', $this->email)->first()?->delete();
+
+        $code = VerificationCode::createCode($this->email);
+
+        // @TODO: change to notification
+        Mail::to($this)->send(new VerifyEmail($code));
+    }
+
+    public function finishOnboarding(): void
+    {
+        $this->update(['onboarding_finished_at' => new Carbon()]);
     }
 }

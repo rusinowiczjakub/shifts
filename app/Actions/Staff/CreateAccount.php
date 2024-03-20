@@ -6,6 +6,7 @@ namespace App\Actions\Staff;
 
 use App\Http\Requests\Staff\CreateAccountRequest;
 use App\Models\MedicalStaff;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,8 @@ class CreateAccount
         ]);
 
         Auth::login($staff);
+
+        $staff->sendEmailVerificationNotification();
 
         return Redirect::route('staff.wizzard.step-1');
     }

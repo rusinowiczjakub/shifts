@@ -128,6 +128,7 @@ const ExperienceForm = ({experience = null, onCancel = null, onSuccess}) => {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
+                onCancel && onCancel();
             }
         });
     }
@@ -195,10 +196,10 @@ const ExperienceForm = ({experience = null, onCancel = null, onSuccess}) => {
                         type="text"
                         className="w-full"
                         placeholder="Wybierz datę"
-                        onSelect={(e) => setData('period_start', parse(e.target.value, 'dd/MM/yy', new Date()).getTime() / 1000)}
+                        onSelect={(e) => setData('period_start', parse(e.target.value, 'dd/MM/yyyy', new Date()).getTime() / 1000)}
                         // onClick={(e) => dobHandler(e)}
                         // onClick={(e) => console.log(e.target.value)}
-                        // onChange={(e) => console.log(e)}
+                        // onSelect={(e) => console.log(e.target.value)}
                         value={experience ? format(parse(experience.period_start, 'yyyy-MM-dd HH:mm:SS', new Date()), 'dd/MM/yyyy') : null}
                         id="datepickerFrom"
                     />
@@ -309,7 +310,9 @@ const UpdateExperienceForm = ({className, experiences}) => {
     }
 
     const onDelete = (id) => {
-        router.delete(route('staff.profile.experience.delete', {experience: id}));
+        router.delete(route('staff.profile.experience.delete', {experience: id}), {
+            preserveScroll: true
+        });
     }
 
     return (

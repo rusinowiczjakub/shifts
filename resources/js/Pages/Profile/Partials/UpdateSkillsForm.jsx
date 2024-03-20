@@ -147,7 +147,9 @@ export default function UpdateSkillsForm({className, skills}) {
     }
 
     const onDelete = (id) => {
-        router.delete(route('staff.profile.skill.delete', {skill: id}));
+        router.delete(route('staff.profile.skill.delete', {skill: id}), {
+            preserveScroll: true
+        });
     }
 
     const onSuccess = () => {
