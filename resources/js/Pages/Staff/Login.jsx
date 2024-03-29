@@ -25,7 +25,7 @@ export default function Register() {
     return (
         <GuestLayout>
             <section className="bg-white dark:bg-gray-900 h-screen flex items-center">
-                <div className="container px-6 pt-32 md:pt-0 mx-auto lg:py-32">
+                <div className="container px-6 pt-24 md:pt-0 mx-auto lg:py-32">
                     <div className="lg:flex">
                         <div className="lg:w-1/2">
                             <Logo/>
