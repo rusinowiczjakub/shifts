@@ -23,9 +23,15 @@ class CreateAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', new Password(), 'confirmed'],
             'terms' => ['accepted']
+        ];
+    }
+
+    public function messages() {
+        return [
+            'email.unique' => 'Ten adres email jest już zajęty.'
         ];
     }
 }

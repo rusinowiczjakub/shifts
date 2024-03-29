@@ -1,5 +1,5 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, router, useForm} from '@inertiajs/react';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -73,7 +73,7 @@ export default function Register() {
 
                                     <InputError message={errors.password} className="mt-2"/>
                                 </div>
-                                <div className="mt-8 md:flex md:items-center">
+                                <div className="mt-8 md:flex md:items-center mb-2">
                                     <button type={'submit'}
                                             className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                         {
@@ -86,6 +86,10 @@ export default function Register() {
                                         }
 
                                     </button>
+                                </div>
+                                <div className={'text-sm'}>
+                                    <span className={'text-gray-500'}>Nie masz konta? </span>
+                                    <button type={'button'} onClick={() => router.visit(route('staff.register'))} className={'text-blue-500'}>Zarejestruj się</button>
                                 </div>
                             </form>
                         </div>

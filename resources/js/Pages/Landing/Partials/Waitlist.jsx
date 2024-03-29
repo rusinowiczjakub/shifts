@@ -49,7 +49,7 @@ export const Waitlist = (props) => {
                                     : <form onSubmit={submit}
                                             className="w-full md:w-8/12  border-transparent focus:border-transparent focus:ring-0">
                                         <div
-                                            className="relative flex items-center rounded-full border border-primary/20 bg-white p-1 px-2 shadow-md focus-within:ring-2 dark:border-white/10 dark:bg-dark dark:text-white md:p-2 lg:pr-3 mb-4">
+                                            className="relative flex items-center rounded-sm border border-primary/20 bg-white p-1 px-2 shadow-md focus-within:ring-2 dark:border-white/10 dark:bg-dark dark:text-white md:p-2 lg:pr-3 mb-4">
                                             <div className="py-3 pl-4 lg:pl-5">
                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                      className="m-auto h-6 w-6 fill-gray-500 dark:fill-gray-400"

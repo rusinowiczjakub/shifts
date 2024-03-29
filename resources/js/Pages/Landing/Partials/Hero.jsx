@@ -1,6 +1,7 @@
-import {useForm, usePage} from "@inertiajs/react";
+import {router, useForm, usePage} from "@inertiajs/react";
 import { Toast } from 'flowbite-react';
 import {useState} from "react";
+import {Loader} from "@/Components/Loader";
 
 export const Hero = (props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -48,51 +49,67 @@ export const Hero = (props) => {
                         </span>
                     </h1>
 
+
+
+
                     <div className="relative items-center gap-12 lg:flex">
                         <div
                             className="text-center sm:mx-auto sm:w-11/12 md:mt-12 md:w-4/5 lg:mt-0 lg:mr-auto lg:w-6/12 lg:text-left">
+                            <h2 className={'text-blue-500 font-semibold text-2xl mt-8'}>Rejestracja ruszyła!</h2>
                             <p className="mt-12 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">Doświadcz
                                 niezależności i elastyczności w pracy medycznej. Nasza aplikacja to nowy wymiar kariery,
-                                gdzie każda zmiana otwiera drzwi do sukcesu. Zapisz się do <span className={'text-blue-600'}>waitlisty</span> i otrzymuj informacje o starcie aplikacji!</p>
+                                gdzie każda zmiana otwiera drzwi do sukcesu. <span className={'text-blue-600'}>Załóż konto</span> i uzupełnij swój profil!</p>
 
-                            {showToast
-                                ? <div className={'mt-2 mb-2 text-blue-500'}>
-                                    Dziękujemy za dołączenie do naszej społeczności! Otrzymasz powiadomienia o starcie aplikacji oraz ekskluzywne informacje. Do zobaczenia wkrótce!
-                                </div>
-                                : <form onSubmit={submit} className="mt-12 border-transparent focus:border-transparent focus:ring-0">
-                                    <div
-                                        className="relative flex items-center rounded-full border border-primary/20 bg-white p-1 px-2 shadow-md focus-within:ring-2 dark:border-white/10 dark:bg-dark dark:text-white md:p-2 lg:pr-3 mb-4">
-                                        <div className="py-3 pl-4 lg:pl-5">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 className="m-auto h-6 w-6 fill-gray-500 dark:fill-gray-400"
-                                                 viewBox="0 0 20 20" fill="currentColor">
-                                                <path
-                                                    d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                                            </svg>
-                                        </div>
-                                        <input required value={data.email} onChange={(e) => setData('email', e.target.value)} aria-label="your email" autoComplete="email" placeholder="Adres email"
-                                               className="w-full rounded-full border-0 border-transparent focus:border-transparent focus:ring-0 bg-transparent p-4 placeholder-gray-600 dark:placeholder-white"
-                                               type="email"/>
-                                        <div className="md:pr-1.5 lg:pr-0">
-                                            <button type="submit" title="Start buying"
-                                                    className="relative ml-auto h-12 w-16 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 active:duration-75 active:before:scale-95 dark:before:bg-primaryLight sm:w-auto sm:px-6">
-                                                <span
-                                                    className="relative w-max font-semibold text-blue-600 dark:text-gray-900 md:block"> Zapisz się </span>
+                            <div className={'mt-8 flex flex-col lg:flex-row'}>
+                                <button type={'button'}
+                                        onClick={() => router.visit(route('staff.register'))}
+                                        className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                    Załóż konto
+                                </button>
+                                <button type={'button'}
+                                        onClick={() => router.visit(route('staff.login'))}
+                                        className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 transform bg-white text-gray-500 rounded-lg md:w-1/2 hover:text-gray-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                    Zaloguj się
+                                </button>
+                            </div>
+                            {/*{showToast*/}
+                            {/*    ? <div className={'mt-2 mb-2 text-blue-500'}>*/}
+                            {/*        Dziękujemy za dołączenie do naszej społeczności! Otrzymasz powiadomienia o starcie aplikacji oraz ekskluzywne informacje. Do zobaczenia wkrótce!*/}
+                            {/*    </div>*/}
+                            {/*    : <form onSubmit={submit} className="mt-12 border-transparent focus:border-transparent focus:ring-0">*/}
+                            {/*        <div*/}
+                            {/*            className="relative flex items-center rounded-full border border-primary/20 bg-white p-1 px-2 shadow-md focus-within:ring-2 dark:border-white/10 dark:bg-dark dark:text-white md:p-2 lg:pr-3 mb-4">*/}
+                            {/*            <div className="py-3 pl-4 lg:pl-5">*/}
+                            {/*                <svg xmlns="http://www.w3.org/2000/svg"*/}
+                            {/*                     className="m-auto h-6 w-6 fill-gray-500 dark:fill-gray-400"*/}
+                            {/*                     viewBox="0 0 20 20" fill="currentColor">*/}
+                            {/*                    <path*/}
+                            {/*                        d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>*/}
+                            {/*                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>*/}
+                            {/*                </svg>*/}
+                            {/*            </div>*/}
+                            {/*            <input required value={data.email} onChange={(e) => setData('email', e.target.value)} aria-label="your email" autoComplete="email" placeholder="Adres email"*/}
+                            {/*                   className="w-full rounded-full border-0 border-transparent focus:border-transparent focus:ring-0 bg-transparent p-4 placeholder-gray-600 dark:placeholder-white"*/}
+                            {/*                   type="email"/>*/}
+                            {/*            <div className="md:pr-1.5 lg:pr-0">*/}
+                            {/*                <button type="submit" title="Start buying"*/}
+                            {/*                        className="relative ml-auto h-12 w-16 before:absolute before:inset-0 before:rounded-full before:bg-primary before:transition before:duration-300 active:duration-75 active:before:scale-95 dark:before:bg-primaryLight sm:w-auto sm:px-6">*/}
+                            {/*                    <span*/}
+                            {/*                        className="relative w-max font-semibold text-blue-600 dark:text-gray-900 md:block"> Zapisz się </span>*/}
 
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <input required checked={data.privacy_policy} onChange={(e) => setData('privacy_policy', e.target.checked)} id="checked-checkbox" type="checkbox"
-                                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                                        <label htmlFor="checked-checkbox"
-                                               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">
-                                            Rozumiem i akceptuję <a className={'text-blue-500'} target={'_blank'} href={'/documents/polityka_prywatnosci.pdf'}>Politykę Prywatności</a>, zgadzając się na otrzymywanie powiadomień dotyczących aplikacji oraz informacji marketingowych.
-                                        </label>
-                                    </div>
-                                </form>
-                            }
+                            {/*                </button>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*        <div className="flex items-center">*/}
+                            {/*            <input required checked={data.privacy_policy} onChange={(e) => setData('privacy_policy', e.target.checked)} id="checked-checkbox" type="checkbox"*/}
+                            {/*                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*            <label htmlFor="checked-checkbox"*/}
+                            {/*                   className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*                Rozumiem i akceptuję <a className={'text-blue-500'} target={'_blank'} href={'/documents/polityka_prywatnosci.pdf'}>Politykę Prywatności</a>, zgadzając się na otrzymywanie powiadomień dotyczących aplikacji oraz informacji marketingowych.*/}
+                            {/*            </label>*/}
+                            {/*        </div>*/}
+                            {/*    </form>*/}
+                            {/*}*/}
 
 
                         </div>

@@ -1,5 +1,5 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import {Head, useForm} from '@inertiajs/react';
+import {Head, router, useForm} from '@inertiajs/react';
 import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
@@ -11,7 +11,7 @@ export default function Register() {
         email: '',
         password: '',
         password_confirmation: '',
-        terms: true
+        terms: false
     })
 
     const submit = (e) => {
@@ -76,7 +76,7 @@ export default function Register() {
                                     <InputError message={errors.password} className="mt-2"/>
                                 </div>
 
-                                <div>
+                                <div className={'mb-4'}>
                                     <InputLabel htmlFor="password_confirmation" value="Potwierdź hasło"/>
 
                                     <TextInput
@@ -91,8 +91,20 @@ export default function Register() {
                                     <InputError message={errors.password_confirmation} className="mt-2"/>
                                 </div>
 
+                                <div>
+                                    <div className="flex items-center">
+                                        <input checked={data.terms} onChange={(e) => setData('terms', e.target.checked)} id="checked-checkbox" type="checkbox"
+                                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                        <label htmlFor="checked-checkbox"
+                                               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">
+                                            Rozumiem i akceptuję <a className={'text-blue-500'} target={'_blank'} href={'/documents/polityka_prywatnosci.pdf'}>Politykę Prywatności</a>, oraz <a className={'text-blue-500'} target={'_blank'} href={'/documents/warunki_korzystania_z_serwisu.pdf'}>Warunki korzystania z serwisu</a>.
+                                        </label>
+                                    </div>
+                                    <InputError message={errors.terms} className="mt-2"/>
 
-                                <div className="mt-8 md:flex md:items-center">
+                                </div>
+
+                                <div className="mt-6 md:flex md:items-center mb-2">
                                     <button type={'submit'}
                                             className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                         {
@@ -105,6 +117,10 @@ export default function Register() {
                                         }
 
                                     </button>
+                                </div>
+                                <div className={'text-sm'}>
+                                    <span className={'text-gray-500'}>Masz już konto? </span>
+                                    <button type={'button'} onClick={() => router.visit(route('staff.login'))} className={'text-blue-500'}>Zaloguj się</button>
                                 </div>
                             </form>
                         </div>
