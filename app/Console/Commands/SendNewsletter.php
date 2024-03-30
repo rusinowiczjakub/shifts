@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\Newsletter;
+use App\Models\Lead;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -27,7 +28,9 @@ class SendNewsletter extends Command
      */
     public function handle(): void
     {
-        Mail::to('rusinowiczjakub@gmail.com')
+        Mail::bcc(Lead::all()->map(
+            fn(Lead $lead) => $lead->email
+        )->toArray())
             ->send(new Newsletter);
     }
 }
