@@ -59,7 +59,12 @@ class ProfileController extends Controller
             'password' => ['required', 'current-password'],
         ]);
 
+        /** @var MedicalStaff $user */
         $user = $request->user();
+        $user->profile->experiences()->delete();
+        $user->profile->professionalTypes()->sync([]);
+        $user->profile->skills()->delete();
+        $user->profile->delete();
 
         Auth::logout();
 
@@ -68,6 +73,6 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to(route('staff.login'));
     }
 }

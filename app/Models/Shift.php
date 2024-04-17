@@ -6,12 +6,13 @@ use App\Models\Concerns\HasAddresses;
 use App\Models\Concerns\HasProfessionalType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Shift extends Model
 {
     use HasFactory,
-        HasAddresses,
         SoftDeletes,
         HasProfessionalType;
 
@@ -36,4 +37,19 @@ class Shift extends Model
         'institution_id' => 1,
         'address_id' => 1,
     ];
+
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class, 'shift_id');
+    }
+
+    public function institution(): BelongsTo
+    {
+        return $this->belongsTo(Institution::class, 'institution_id');
+    }
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class, 'address_id');
+    }
 }

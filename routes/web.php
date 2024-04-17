@@ -2,7 +2,7 @@
 
 use App\Actions\Auth\ResendVerificationCode;
 use App\Actions\Auth\VerifyEmail;
-use App\Actions\JobBoard\Index;
+use App\Actions\JobBoard;
 use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
@@ -27,6 +27,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EmployerAccess;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\StaffAccess;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Actions\Employer;
@@ -62,7 +63,7 @@ Route::prefix('staff')
     ->name('staff.')
     ->group(function () {
         Route::get('/dashboard', function () {
-            return Inertia::render('Staff/Dashboard');
+            return Redirect::route('staff.profile.edit');
         })->name('dashboard');
 
         Route::middleware('guest')->group(function () {
@@ -120,7 +121,13 @@ Route::get('/', function () {
 Route::post('/', \App\Actions\Landing\CreateLead::class)
     ->name('landing.lead.create');
 
+// > JOBBOARD
+//Route::domain('jobboard.' . env('APP_DOMAIN'))->group(function () {
+//    Route::get('/', JobBoard\Index::class);
+//});
 
+Route::get('/jobboard', JobBoard\Index::class);
+// < JOBBOARD
 
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [

@@ -27,15 +27,17 @@ class UpdateCompanyProfile
         /** @var Institution $institution */
         $institution = $user->institution;
 
+
         $institution->fill(
             $request->getInstitutionValues()
         );
 
         /** @var Address $institutionAddress */
         $institutionAddress = $institution->address;
-        $institutionAddress->fill(
+
+        $institutionAddress->fill([
             $request->getAddressValues()
-        );
+        ]);
 
         $institution->save();
         $institutionAddress->save();

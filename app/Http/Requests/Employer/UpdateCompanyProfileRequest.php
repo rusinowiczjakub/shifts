@@ -23,7 +23,6 @@ class UpdateCompanyProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'address_name' => ['required'],
             'nip' => ['required', 'NIP'],
             'regon' => ['required', 'REGON'],
             'address_street' => ['required'],

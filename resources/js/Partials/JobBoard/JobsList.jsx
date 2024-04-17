@@ -1,26 +1,15 @@
 import JobRow from "@/Partials/JobBoard/JobRow";
 
-const JobsList = (props) => {
+const JobsList = ({shifts, onSelect, selected}) => {
+    console.log(selected);
     return (
         <div>
-            <div className={'my-4'}>
-                <JobRow/>
-            </div>
-            <div className={'my-4'}>
-                <JobRow/>
-            </div>
-            <div className={'my-4'}>
-                <JobRow/>
-            </div>
-            <div className={'my-4'}>
-                <JobRow/>
-            </div>
-            <div className={'my-4'}>
-                <JobRow/>
-            </div>
-            <div className={'my-4'}>
-                <JobRow/>
-            </div>
+            {shifts.map((shift) => {
+                return <div className={`my-4`}>
+                    <JobRow onClick={onSelect} shift={shift}/>
+                </div>
+
+            })}
         </div>
     )
 }
