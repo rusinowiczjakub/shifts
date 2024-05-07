@@ -1,6 +1,6 @@
 export default function JobBoardApp({children}) {
     return (
-        <div>
+        <div className={'bg-gray-50'}>
             {children}
         </div>
     );

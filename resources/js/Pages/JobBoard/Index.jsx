@@ -5,6 +5,8 @@ import SelectedJob from "@/Partials/JobBoard/SelectedJob";
 import Hero from "@/Partials/JobBoard/Hero";
 import {useEffect, useState} from "react";
 import {Dialog} from '@headlessui/react'
+import JobRow from "@/Partials/JobBoard/JobRow";
+import JobFilters from "@/Pages/JobBoard/Partial/JobFilters";
 
 export default function Index({shifts}) {
     const [selectedJob, selectJob] = useState(null);
@@ -28,16 +30,106 @@ export default function Index({shifts}) {
                 <Navbar/>
             </Hero>
             <div className="px-8">
-                <div className="container mx-auto flex">
-                    <div className="w-full lg:w-1/3 h-screen overflow-y-auto no-scrollbar pr-6 pt-20">
-                        <div>
-                            <JobsList shifts={shifts} onSelect={selectJob} selected={selectedJob}/>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
+                    <div className="w-full lg:w-1/3 h-screen overflow-y-auto no-scrollbar pt-20">
+                        <div className={'px-2 hidden md:flex flex-col gap-10'}>
+                            {/*<div>*/}
+                            {/*    <h3 className={'text-lg font-semibold mb-4'}>Specjalizacja</h3>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Pielęgniarstwo*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Położnictwo*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Farmacja*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Fizjoterapia*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                            {/*    <h3 className={'text-lg font-semibold mb-4'}>Lokalizacja</h3>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Warszawa*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Poznań*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Wrocław*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Szczecin*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Rzeszów*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="flex items-center mb-2">*/}
+                            {/*        <input checked={false} type="checkbox"*/}
+                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
+                            {/*        <label htmlFor="checked-checkbox"*/}
+                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
+                            {/*            Lublin*/}
+                            {/*        </label>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
+                            <JobFilters/>
                         </div>
                     </div>
                     <div className="hidden md:flex w-full lg:w-2/3 h-full pt-20">
                         <div className="w-full h-full">
-                            {selectedJob && <SelectedJob shift={selectedJob}/>}
+                            {shifts.map((shift) => {
+                                return <div className={`mb-4`}>
+                                    <JobRow onClick={() => selectJob(shift)} shift={shift}/>
+                                </div>
 
+                            })}
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ const JobsList = ({shifts, onSelect, selected}) => {
     return (
         <div>
             {shifts.map((shift) => {
-                return <div className={`my-4`}>
+                return <div className={`mb-4`}>
                     <JobRow onClick={onSelect} shift={shift}/>
                 </div>
 
