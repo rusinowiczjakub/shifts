@@ -7,10 +7,19 @@ import {useEffect, useState} from "react";
 import {Dialog} from '@headlessui/react'
 import JobRow from "@/Partials/JobBoard/JobRow";
 import JobFilters from "@/Pages/JobBoard/Partial/JobFilters";
+import {useForm} from "@inertiajs/react";
 
-export default function Index({shifts}) {
+export default function Index({shifts, filters}) {
     const [selectedJob, selectJob] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
+
+    const { data, setData } = useForm({
+        city: [],
+        professionalType: [],
+        periodStart: null,
+        periodEnd: null
+    });
+
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -30,8 +39,8 @@ export default function Index({shifts}) {
                 <Navbar/>
             </Hero>
             <div className="px-8">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
-                    <div className="w-full lg:w-1/3 h-screen overflow-y-auto no-scrollbar pt-20">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-between">
+                    <div className="w-full lg:w-1/4 h-screen overflow-y-auto no-scrollbar pt-20">
                         <div className={'px-2 hidden md:flex flex-col gap-10'}>
                             {/*<div>*/}
                             {/*    <h3 className={'text-lg font-semibold mb-4'}>Specjalizacja</h3>*/}
@@ -119,7 +128,7 @@ export default function Index({shifts}) {
                             {/*        </label>*/}
                             {/*    </div>*/}
                             {/*</div>*/}
-                            <JobFilters/>
+                            <JobFilters filters={filters} setData={setData} data={data}/>
                         </div>
                     </div>
                     <div className="hidden md:flex w-full lg:w-2/3 h-full pt-20">

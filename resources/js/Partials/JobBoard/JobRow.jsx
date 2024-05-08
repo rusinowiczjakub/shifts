@@ -71,7 +71,7 @@ const JobRow = ({shift, onClick}) => {
                 </div>
                 <div>
                     <button
-                        className="flex items-center justify-center px-3 py-1.5 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                        className="flex items-center justify-center px-3 py-1.5 text-sm tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 text-xs">
                         <div> Aplikuj</div>
                     </button>
                 </div>

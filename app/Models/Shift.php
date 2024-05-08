@@ -33,11 +33,6 @@ class Shift extends Model
         'additional_requirements' => 'array'
     ];
 
-    protected $attributes = [
-        'institution_id' => 1,
-        'address_id' => 1,
-    ];
-
     public function applications(): HasMany
     {
         return $this->hasMany(Application::class, 'shift_id');

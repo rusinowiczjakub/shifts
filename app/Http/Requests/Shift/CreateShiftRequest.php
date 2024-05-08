@@ -26,7 +26,8 @@ class CreateShiftRequest extends FormRequest
             'end_date' => ['required'],
             'total_pay' => ['required'],
             'available_slots' => ['required'],
-            'professional_type_id' => ['required']
+            'professional_type_id' => ['required'],
+            'address_id' => ['required']
         ];
     }
 }

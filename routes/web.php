@@ -50,7 +50,7 @@ Route::prefix('employer')
             return Inertia::render('Employer/Dashboard');
         })->name('employer.dashboard');
         Route::get('/shift', ShowShiftList::class)->name('shift.list');
-        Route::post('/shift', CreateShift::class)->name('shift.create');
+//        Route::post('/shift', CreateShift::class)->name('shift.create');
         Route::get('/shift/{shiftId}/applications/', ShowShiftApplications::class)->name('shift.applications');
         Route::get('/shift/{shiftId}/applications/{id}', ShowApplicationDetails::class)->name('shift.applications');
         Route::get('/settings', Employer\Settings::class)->name('settings.index');
@@ -126,9 +126,12 @@ Route::post('/', \App\Actions\Landing\CreateLead::class)
 //    Route::get('/', JobBoard\Index::class);
 //});
 
-Route::get('/jobboard', JobBoard\Index::class);
+Route::get('/jobboard', JobBoard\Index::class)->name('jobboard.index');
 // < JOBBOARD
 
+Route::get('/shift-request/{token}', Employer\ShiftRequestForm::class)->name('employer.shift-request');
+Route::post('/shift/{token}', CreateShift::class)->name('shift.create');
+Route::get('/calendar/{token}', Employer\ScheduleCalendar::class);
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [
 //        'canLogin' => Route::has('login'),

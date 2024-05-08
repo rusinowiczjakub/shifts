@@ -5,35 +5,102 @@ import InputLabel from "@/Components/InputLabel";
 import TextInput from "@/Components/TextInput";
 import {format, parse} from "date-fns";
 import InputError from "@/Components/InputError";
+import {router} from "@inertiajs/react";
 // import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 
-const filters = [
-    {
-        id: 'city',
-        name: 'Miasto',
-        options: [
-            {value: 'white', label: 'Warszawa', checked: false},
-            {value: 'beige', label: 'Poznań', checked: false},
-            {value: 'blue', label: 'Szczecin', checked: true},
-            {value: 'brown', label: 'Wrocałw', checked: false},
-            {value: 'green', label: 'Lublin', checked: false},
-            {value: 'purple', label: 'Katowice', checked: false},
-            {value: 'purple', label: 'Kraków', checked: false},
-        ],
-    },
-    {
-        id: 'professional-type',
-        name: 'Specjalizacja',
-        options: [
-            {value: 1, label: 'Położnictwo', checked: false},
-            {value: 2, label: 'Pielęgniarstwo', checked: false},
-        ],
-    },
-]
+// const filters = [
+//     {
+//         id: 'city',
+//         name: 'Miasto',
+//         options: [
+//             {value: 'white', label: 'Warszawa', checked: false},
+//             {value: 'beige', label: 'Poznań', checked: false},
+//             {value: 'blue', label: 'Szczecin', checked: true},
+//             {value: 'brown', label: 'Wrocałw', checked: false},
+//             {value: 'green', label: 'Lublin', checked: false},
+//             {value: 'purple', label: 'Katowice', checked: false},
+//             {value: 'purple', label: 'Kraków', checked: false},
+//         ],
+//     },
+//     {
+//         id: 'professional-type',
+//         name: 'Specjalizacja',
+//         options: [
+//             {value: 1, label: 'Położnictwo', checked: false},
+//             {value: 2, label: 'Pielęgniarstwo', checked: false},
+//         ],
+//     },
+// ]
 
-const JobFilters = (professionalTypes = []) => {
+const JobFilters = ({setData, data, filters = []}) => {
     const datepickerFromRef = useRef();
     const datepickerToRef = useRef();
+    const [shouldSubmit, setShouldSubmit] = useState(false);
+
+    // useEffect(() => {
+    //     submitFilters();
+    // }, [])
+
+    const handleDateChange = (field, value) => {
+        if (!value) {
+            return;
+        }
+        // Parsuj wartość daty z formatu wprowadzonego w interfejsie użytkownika
+        const parsedDate = parse(value, 'dd/mm/yyyy', new Date());
+
+        // Ustaw wartość w stanie formularza
+        setData(prevData => ({
+            ...prevData,
+            [field]: parsedDate // Formatuj datę do formatu akceptowanego przez backend
+        }));
+    };
+
+    const handleFilterChange = (filterType, value, checked) => {
+        // Obsługa dla opcji checkbox
+        if (Array.isArray(data[filterType])) {
+            setData(prevData => {
+                const newValues = new Set(prevData[filterType] || []);
+
+                if (checked) {
+                    newValues.add(value);
+                } else {
+                    newValues.delete(value);
+                }
+
+                return {
+                    ...prevData,
+                    [filterType]: Array.from(newValues)
+                };
+            });
+
+            setShouldSubmit(true);
+        } else {
+            console.log('dupa');
+            // Dla pojedynczych wartości, np. dat
+            setData(prevData => ({
+                ...prevData,
+                [filterType]: value
+            }));
+
+            setShouldSubmit(true);
+        }
+    };
+
+    const submitFilters = () => {
+        router.get(route('jobboard.index'), data, {
+            preserveState: true,
+            preserveScroll: true
+        });
+    };
+
+    useEffect(() => {
+        if (shouldSubmit) {
+            submitFilters();
+            setShouldSubmit(false); // Reset flag after submitting
+        }
+    }, [shouldSubmit]); // Listen only to shouldSubmit changes
+
+
 
     useEffect(() => {
         if (datepickerFromRef?.current && datepickerToRef?.current) {
@@ -85,7 +152,8 @@ const JobFilters = (professionalTypes = []) => {
                                                             name={`${section.id}[]`}
                                                             defaultValue={option.value}
                                                             type="checkbox"
-                                                            defaultChecked={option.checked}
+                                                            // defaultChecked={option.checked}
+                                                            onChange={(e) => handleFilterChange(section.id, option.value, e.target.checked)}
                                                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                         />
                                                         <label
@@ -141,7 +209,10 @@ const JobFilters = (professionalTypes = []) => {
                                                     // onClick={(e) => dobHandler(e)}
                                                     // onClick={(e) => console.log(e.target.value)}
                                                     // onSelect={(e) => console.log(e.target.value)}
-                                                    value={null}
+                                                    // value={null}
+                                                    // onSelect={(e) => handleFilterChange('periodStart', e.target.value, true)}
+                                                    onSelect={(e) => handleFilterChange('periodStart', e.target.value, true)}
+                                                    // value={data.periodStart || null}
                                                     id="datepickerFrom"
                                                 />
                                                 {/*<InputError className={'mt-2'} message={errors.period_start}/>*/}
@@ -160,8 +231,10 @@ const JobFilters = (professionalTypes = []) => {
                                                     // onClick={(e) => console.log(e.target.value)}
                                                     // onChange={(e) => console.log(e)}
                                                     // value={experience && experience.period_end ? format(parse(experience.period_end, 'yyyy-MM-dd HH:mm:SS', new Date()), 'dd/MM/yyyy') : null}
-                                                    value={null}
                                                     id="datepickerTo"
+                                                    // onSelect={(e) => handleFilterChange('periodEnd', e.target.value, true)}
+                                                    onSelect={(e) => handleFilterChange('periodEnd', e.target.value, true)}
+                                                    // value={data.periodEnd || null}
                                                     // disabled={currentlyWorking}
                                                 />
 
