@@ -40,7 +40,8 @@ class ScheduleCalendar
                             'name' => $formattedAddress,
                             'imageUrl' => '',
                             'startDatetime' => $shift->start_date,
-                            'endDatetime' => $shift->end_date
+                            'endDatetime' => $shift->end_date,
+                            'category' => $shift?->professionalType?->name
                         ];
                     }
                 ),

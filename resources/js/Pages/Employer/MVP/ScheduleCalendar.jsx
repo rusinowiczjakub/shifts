@@ -1,12 +1,16 @@
 import GuestLayout from "@/Layouts/GuestLayout";
 import Calendar from "@/Pages/Employer/MVP/Partials/Calendar";
 import {Logo} from "@/Components/Logo";
+import {useState} from "react";
 
 const ScheduleCalendar = ({shifts}) => {
+    const [selectedShift, setSelectedShift] = useState(null);
+
+
     return (
         <GuestLayout>
-            <section className="bg-white dark:bg-gray-900 h-screen flex items-center">
-                <div className="container max-w-4xl mx-auto px-6 pt-24 md:pt-0 mx-auto lg:py-32">
+            <section className="bg-white dark:bg-gray-900 lg:h-screen flex items-center">
+                <div className="container max-w-4xl mx-auto px-6 pt-24 md:pt-0 lg:py-32">
                     <div className="flex flex-col justify-center">
                         <div className="w-full flex flex-col items-center">
                             <Logo/>
@@ -20,7 +24,7 @@ const ScheduleCalendar = ({shifts}) => {
                         </div>
                     </div>
                     <div className="">
-                        <Calendar shifts={shifts}/>
+                        <Calendar selectShift={(value) => setSelectedShift(value)} shifts={shifts}/>
                     </div>
                 </div>
             </section>

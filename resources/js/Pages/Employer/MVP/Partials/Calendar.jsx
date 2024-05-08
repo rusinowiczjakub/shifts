@@ -15,6 +15,7 @@ import {
 import { Fragment, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { pl } from 'date-fns/locale';
+import {Briefcase} from "@/Components/Icons/Briefcase";
 const meetings = [
     {
         id: 1,
@@ -62,7 +63,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Calendar({shifts}) {
+export default function Calendar({shifts, selectShift}) {
     let today = startOfToday()
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
@@ -173,17 +174,17 @@ export default function Calendar({shifts}) {
                             ))}
                         </div>
                     </div>
-                    <section className="mt-12 md:mt-0 md:pl-14">
-                        <h2 className="font-semibold text-gray-900">
+                    <section className="mt-12 md:mt-0 md:pl-14 md:max-h-[400px] overflow-y-scroll no-scrollbar">
+                        <h2 className="fixed w-full bg-white font-semibold text-gray-900">
                             Zmiany na dzień {' '}
                             <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
                                 {format(selectedDay, 'dd MMM, yyy', {locale: pl})}
                             </time>
                         </h2>
-                        <ol className="mt-4 space-y-1 text-sm leading-6 text-gray-500">
+                        <ol className="mt-8 space-y-1 text-sm leading-6 text-gray-500">
                             {selectedDayMeetings.length > 0 ? (
                                 selectedDayMeetings.map((meeting) => (
-                                    <Meeting meeting={meeting} key={meeting.id} />
+                                    <Meeting selectShift={selectShift} meeting={meeting} key={meeting.id} />
                                 ))
                             ) : (
                                 <p>W tym dniu nie ma jeszcze żadnej zmiany.</p>
@@ -196,26 +197,26 @@ export default function Calendar({shifts}) {
     )
 }
 
-function Meeting({ meeting }) {
+function Meeting({ meeting, selectShift }) {
     let startDateTime = parseISO(meeting.startDatetime)
     let endDateTime = parseISO(meeting.endDatetime)
 
     return (
         <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-            <img
-                src={meeting.imageUrl}
-                alt=""
-                className="flex-none w-10 h-10 rounded-full"
-            />
+            <div
+                className={'flex justify-center items-center bg-blue-100 rounded-full px-4 py-4 text-blue-500 mr-4'}>
+                <Briefcase/>
+            </div>
             <div className="flex-auto">
+                <h2 className="">{meeting.category}</h2>
                 <p className="text-gray-900">{meeting.name}</p>
                 <p className="mt-0.5">
                     <time dateTime={meeting.startDatetime}>
-                        {format(startDateTime, 'h:mm a')}
+                        {format(startDateTime, 'dd/MM/yyyy h:mm a')}
                     </time>{' '}
-                    -{' '}
+                    <br/>
                     <time dateTime={meeting.endDatetime}>
-                        {format(endDateTime, 'h:mm a')}
+                        {format(endDateTime, 'dd/MM/yyyy h:mm a')}
                     </time>
                 </p>
             </div>
@@ -244,32 +245,32 @@ function Meeting({ meeting }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute left-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-sm w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-50 mt-2 origin-top-right bg-white rounded-md shadow-sm w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <button
+                                        type={'button'}
+                                        onClick={selectShift(meeting)}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
+                                            'w-full px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Edit
-                                    </a>
+                                        Aplikacje
+                                    </button>
                                 )}
                             </Menu.Item>
                             <Menu.Item>
                                 {({ active }) => (
-                                    <a
-                                        href="#"
+                                    <button
                                         className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
+                                            active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'w-full px-4 py-2 text-sm'
                                         )}
                                     >
-                                        Cancel
-                                    </a>
+                                        Usuń zmianę
+                                    </button>
                                 )}
                             </Menu.Item>
                         </div>
