@@ -12,10 +12,12 @@ import {
     parseISO,
     startOfToday,
 } from 'date-fns'
-import { Fragment, useState } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { pl } from 'date-fns/locale';
+import {Fragment, useEffect, useRef, useState} from 'react'
+import {Menu, Transition} from '@headlessui/react'
+import {pl} from 'date-fns/locale';
 import {Briefcase} from "@/Components/Icons/Briefcase";
+import {ChevronDownIcon, ChevronUpIcon} from "@heroicons/react/16/solid";
+
 const meetings = [
     {
         id: 1,
@@ -68,6 +70,13 @@ export default function Calendar({shifts, selectShift}) {
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
+    const scrollContainerRef = useRef(null);
+    const [atBottom, setAtBottom] = useState(false);
+
+    useEffect(() => {
+        scrollContainerRef.current.scrollBy({top: -99999})
+        setAtBottom(false);
+    }, [selectedDay])
 
     let days = eachDayOfInterval({
         start: firstDayCurrentMonth,
@@ -75,18 +84,37 @@ export default function Calendar({shifts, selectShift}) {
     })
 
     function previousMonth() {
-        let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
+        let firstDayNextMonth = add(firstDayCurrentMonth, {months: -1})
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
     }
 
     function nextMonth() {
-        let firstDayNextMonth = add(firstDayCurrentMonth, { months: 1 })
+        let firstDayNextMonth = add(firstDayCurrentMonth, {months: 1})
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
     }
 
     let selectedDayMeetings = shifts.filter((meeting) =>
         isSameDay(parseISO(meeting.startDatetime), selectedDay)
     )
+
+    const handleScroll = () => {
+        const element = scrollContainerRef.current;
+        const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
+        setAtBottom(atBottom);
+    };
+
+
+    const scrollContent = () => {
+        const element = scrollContainerRef.current;
+        const scrollAmount = 200; // Możesz dostosować tę wartość
+
+        if (atBottom) {
+            element.scrollBy({ top: -scrollAmount, behavior: 'smooth' });
+        } else {
+            element.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
 
     return (
         <div className="pt-16">
@@ -174,35 +202,43 @@ export default function Calendar({shifts, selectShift}) {
                             ))}
                         </div>
                     </div>
-                    <section className="mt-12 md:mt-0 md:pl-14 md:max-h-[400px] overflow-y-scroll no-scrollbar">
-                        <h2 className="fixed w-full bg-white font-semibold text-gray-900">
-                            Zmiany na dzień {' '}
-                            <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
-                                {format(selectedDay, 'dd MMM, yyy', {locale: pl})}
-                            </time>
-                        </h2>
-                        <ol className="mt-8 space-y-1 text-sm leading-6 text-gray-500">
-                            {selectedDayMeetings.length > 0 ? (
-                                selectedDayMeetings.map((meeting) => (
-                                    <Meeting selectShift={selectShift} meeting={meeting} key={meeting.id} />
-                                ))
-                            ) : (
-                                <p>W tym dniu nie ma jeszcze żadnej zmiany.</p>
-                            )}
-                        </ol>
-                    </section>
+                    <div className="relative md:pl-14 md:max-h-[400px]">
+                        <section ref={scrollContainerRef} className="md:mt-0 overflow-y-scroll no-scrollbar h-full" onScroll={handleScroll}>
+                            <h2 className="sticky top-0 w-full bg-white font-semibold text-gray-900">
+                                Zmiany na dzień {' '}
+                                <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
+                                    {format(selectedDay, 'dd MMM, yyyy', { locale: pl })}
+                                </time>
+                            </h2>
+                            <ol className="space-y-1 text-sm leading-6 text-gray-500">
+                                {selectedDayMeetings.length > 0 ? (
+                                    selectedDayMeetings.map((meeting) => (
+                                        <Meeting selectShift={selectShift} meeting={meeting} key={meeting.id} />
+                                    ))
+                                ) : (
+                                    <p>W tym dniu nie ma jeszcze żadnej zmiany.</p>
+                                )}
+                            </ol>
+                        </section>
+                        {
+                            selectedDayMeetings.length > 0 &&
+                            <button onClick={scrollContent} className="absolute right-4 bottom-4 p-2 bg-blue-500 text-white rounded-full shadow-lg">
+                                {atBottom ? <ChevronUpIcon className="h-6 w-6" /> : <ChevronDownIcon className="h-6 w-6" />}
+                            </button>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-function Meeting({ meeting, selectShift }) {
+function Meeting({meeting, selectShift}) {
     let startDateTime = parseISO(meeting.startDatetime)
     let endDateTime = parseISO(meeting.endDatetime)
 
     return (
-        <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
+        <li className="cursor-pointer flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
             <div
                 className={'flex justify-center items-center bg-blue-100 rounded-full px-4 py-4 text-blue-500 mr-4'}>
                 <Briefcase/>
@@ -213,7 +249,8 @@ function Meeting({ meeting, selectShift }) {
                 <p className="mt-0.5">
                     <time dateTime={meeting.startDatetime}>
                         {format(startDateTime, 'dd/MM/yyyy h:mm a')}
-                    </time>{' '}
+                    </time>
+                    {' '}
                     <br/>
                     <time dateTime={meeting.endDatetime}>
                         {format(endDateTime, 'dd/MM/yyyy h:mm a')}
@@ -225,7 +262,8 @@ function Meeting({ meeting, selectShift }) {
                 className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100"
             >
                 <div>
-                    <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
+                    <Menu.Button
+                        className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
                         <div className={'leading-[5px] font-bold'}>
                             .<br/>
                             .<br/>
@@ -245,13 +283,14 @@ function Meeting({ meeting, selectShift }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 z-50 mt-2 origin-top-right bg-white rounded-md shadow-sm w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items
+                        className="absolute right-0 z-50 mt-2 origin-top-right bg-white rounded-md shadow-sm w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                             <Menu.Item>
-                                {({ active }) => (
+                                {({active}) => (
                                     <button
                                         type={'button'}
-                                        onClick={selectShift(meeting)}
+                                        onClick={() => selectShift(meeting)}
                                         className={classNames(
                                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                             'w-full px-4 py-2 text-sm'
@@ -262,7 +301,7 @@ function Meeting({ meeting, selectShift }) {
                                 )}
                             </Menu.Item>
                             <Menu.Item>
-                                {({ active }) => (
+                                {({active}) => (
                                     <button
                                         className={classNames(
                                             active ? ' bg-gray-100 text-gray-900' : 'text-gray-700',
