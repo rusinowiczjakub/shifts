@@ -7,45 +7,20 @@ import {Dollar} from "@/Components/Icons/Dollar";
 import {Briefcase} from "@/Components/Icons/Briefcase";
 import {Pin} from "@/Components/Icons/Pin";
 import {Calendar} from "@/Components/Icons/Calendar";
+import {router} from "@inertiajs/react";
 
 const JobRow = ({shift, onClick}) => {
-    console.log(shift);
+    const apply = (shiftId) => {
+        router.post(route('staff.shift.apply', {shift: shiftId}), {}, {
+            preserveState: true,
+            preserveScroll: true,
+            onSuccess: () => {
+                console.log('success');
+            }
+        })
+    }
+
     return (
-        // <a href="#"
-        //    className="block p-6 bg-white hover:rounded-lg dark:bg-gray-800 border-b">
-        //     <div className="flex flex-row items-center my-1 justify-between">
-        //         <div>
-        //             <img src={'https://img.redro.pl/obrazy/szpital-logo-zdrowia-700-90031093.jpg'} className={'w-16 h-16 object-cover'} />
-        //         </div>
-        //         <div>
-        //             <h2 className={'text-lg'}>Looking for CN for...</h2>
-        //             <p className={'text-sm text-gray-400'}>We are looking for CN for night shift...</p>
-        //         </div>
-        //         <div>
-        //             <div className={'border rounded-md border-gray-200 p-2'}>
-        //                 <Bookmark className={'w-6 h-6 text-gray-500'}/>
-        //             </div>
-        //         </div>
-        //     </div>
-        //     <div className="my-1 mb-4">
-        //         <div className="flex flex-row flex-wrap">
-        //             <SpecializationPill>Intensywna terapia</SpecializationPill>
-        //             <SpecializationPill>Kwalifikowana pięlęgniarka</SpecializationPill>
-        //             <SpecializationPill>12h, 19:00 - 07:00</SpecializationPill>
-        //             <SpecializationPill>920 PLN / 12h</SpecializationPill>
-        //             <SpecializationPill>3 wolne miejsca</SpecializationPill>
-        //         </div>
-        //     </div>
-        //     <div className="my-1">
-        //         <Rating>
-        //             <Rating.Star />
-        //             <Rating.Star />
-        //             <Rating.Star />
-        //             <Rating.Star />
-        //             <Rating.Star />
-        //         </Rating>
-        //     </div>
-        // </a>
         <div onClick={() => onClick(shift)}
              className="group shadow-sm dark:shadow-gray-700 p-6 rounded-md bg-white dark:bg-slate-900">
             <div className="flex items-center justify-between">
@@ -71,30 +46,14 @@ const JobRow = ({shift, onClick}) => {
                 </div>
                 <div>
                     <button
+                        type={'button'}
+                        onClick={() => apply(shift.id)}
                         className="flex items-center justify-center px-3 py-1.5 text-sm tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50 text-xs">
                         <div> Aplikuj</div>
                     </button>
                 </div>
-                {/*<span*/}
-                {/*    className="bg-blue-600/10 group-hover:bg-blue-600 inline-block text-blue-600 group-hover:text-white text-xs px-2.5 py-0.5 font-semibold rounded-full transition-all duration-500">*/}
-                {/*    {shift.total_pay} PLN / <span className={'text-xxs'}>{differenceInHours(*/}
-                {/*        parseISO(shift.end_date),*/}
-                {/*        parseISO(shift.start_date),*/}
-                {/*)} godzin</span>*/}
-                {/*</span>*/}
             </div>
-
-            {/*<div className="mt-6">*/}
-            {/*    <a href="job-detail-three.html"*/}
-            {/*       className="text-lg hover:text-blue-600 font-semibold transition-all duration-500">*/}
-            {/*        {shift.professional_type.name}*/}
-            {/*    </a>*/}
-            {/*    <h6 className="text-base font-medium">*/}
-            {/*        <i className="uil uil-map-marker"></i>*/}
-            {/*        {shift.address.city}*/}
-            {/*    </h6>*/}
-            {/*</div>*/}
-            <div className={'flex flex-row gap-6'}>
+            <div className={'flex flex-col lg:flex-row lg:gap-6'}>
                 <div className={'mt-6 flex flex-row items-center'}>
                     <div
                         className={'flex w-10 h-10 justify-center items-center bg-blue-100 rounded-md text-blue-500 mr-4'}>

@@ -1,25 +1,29 @@
 import JobBoardAppLayout from "@/Layouts/JobBoardAppLayout";
 import Navbar from "@/Partials/JobBoard/Navbar";
-import JobsList from "@/Partials/JobBoard/JobsList";
-import SelectedJob from "@/Partials/JobBoard/SelectedJob";
 import Hero from "@/Partials/JobBoard/Hero";
 import {useEffect, useState} from "react";
 import {Dialog} from '@headlessui/react'
 import JobRow from "@/Partials/JobBoard/JobRow";
 import JobFilters from "@/Pages/JobBoard/Partial/JobFilters";
 import {useForm} from "@inertiajs/react";
+import {AdjustmentsHorizontalIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import {Loader} from "@/Components/Loader";
 
 export default function Index({shifts, filters}) {
     const [selectedJob, selectJob] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { data, setData } = useForm({
+    const {data, setData} = useForm({
         city: [],
         professionalType: [],
         periodStart: null,
         periodEnd: null
     });
 
+    useEffect(() => {
+        console.log(data)
+    }, [data])
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -39,99 +43,28 @@ export default function Index({shifts, filters}) {
                 <Navbar/>
             </Hero>
             <div className="px-8">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex justify-between">
-                    <div className="w-full lg:w-1/4 h-screen overflow-y-auto no-scrollbar pt-20">
-                        <div className={'px-2 hidden md:flex flex-col gap-10'}>
-                            {/*<div>*/}
-                            {/*    <h3 className={'text-lg font-semibold mb-4'}>Specjalizacja</h3>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Pielęgniarstwo*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Położnictwo*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Farmacja*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Fizjoterapia*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                            {/*    <h3 className={'text-lg font-semibold mb-4'}>Lokalizacja</h3>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Warszawa*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Poznań*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Wrocław*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Szczecin*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Rzeszów*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*    <div className="flex items-center mb-2">*/}
-                            {/*        <input checked={false} type="checkbox"*/}
-                            {/*               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>*/}
-                            {/*        <label htmlFor="checked-checkbox"*/}
-                            {/*               className="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">*/}
-                            {/*            Lublin*/}
-                            {/*        </label>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            <JobFilters filters={filters} setData={setData} data={data}/>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row lg:justify-between">
+                    {!isMobile &&
+                        <div className="w-full lg:w-1/4 h-screen overflow-y-auto no-scrollbar pt-20">
+                            <div className={'px-2 hidden md:flex flex-col gap-10'}>
+                                <JobFilters filters={filters} setData={setData} data={data}/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="hidden md:flex w-full lg:w-2/3 h-full pt-20">
+                    }
+                    {
+                        isMobile &&
+                        <div className={'w-full border-b border-gray-200 px-2 py-2'}>
+                            <div onClick={() => setIsModalOpen(true)}
+                                 className={'flex flex-row justify-end cursor-pointer'}>
+                                <div className={'text-sm mr-2'}>Filtruj</div>
+                                <div className={'w-6 h-6 text-gray-600'}>
+                                    <AdjustmentsHorizontalIcon/>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div className="lg:flex w-full lg:w-2/3 h-full pt-20">
                         <div className="w-full h-full">
                             {shifts.map((shift) => {
                                 return <div className={`mb-4`}>
@@ -143,20 +76,34 @@ export default function Index({shifts, filters}) {
                     </div>
                 </div>
             </div>
-            {
-                isMobile && selectedJob &&
-                <Dialog
-                    as={'div'}
-                    className={'fixed inset-0 z-10 overflow-y-auto md:hidden w-screen h-screen'}
-                    open={selectedJob !== null} onClose={(e) => {selectJob(null);}}>
-                    {/*<Dialog.Panel>*/}
-                        <div onClick={() => selectJob(null)} className={'cursor-pointer flex justify-end w-full h-10 bg-blue-500 text-white'}>
-                            <div className={'h-10 w-10 flex justify-center items-center'}>X</div>
-                        </div>
-                        <SelectedJob shift={selectedJob}/>
-                    {/*</Dialog.Panel>*/}
 
+            {
+                isMobile &&
+                <Dialog
+                    open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                    <div className="fixed bg-white inset-0 flex flex-col px-4 py-4">
+                        <div className={'w-full flex justify-end'}>
+                            <button onClick={() => setIsModalOpen(false)} type={'button'} className={'h-6 w-6'}>
+                                <XMarkIcon/>
+                            </button>
+                        </div>
+                        <Dialog.Title>
+                            Filtruj wyniki wyszukiwania
+                        </Dialog.Title>
+                        <Dialog.Panel>
+
+                            <JobFilters filters={filters} setData={setData} data={data}/>
+                            <div>
+                                <button onClick={() => setIsModalOpen(false)}
+                                    type={'button'}
+                                        className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                    Zastosuj
+                                </button>
+                            </div>
+                        </Dialog.Panel>
+                    </div>
                 </Dialog>
+
             }
 
         </JobBoardAppLayout>

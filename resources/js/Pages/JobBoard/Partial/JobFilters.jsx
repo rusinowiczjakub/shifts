@@ -75,7 +75,6 @@ const JobFilters = ({setData, data, filters = []}) => {
 
             setShouldSubmit(true);
         } else {
-            console.log('dupa');
             // Dla pojedynczych wartości, np. dat
             setData(prevData => ({
                 ...prevData,
@@ -121,10 +120,10 @@ const JobFilters = ({setData, data, filters = []}) => {
     return (
         <main className="w-full">
 
-            <section aria-labelledby="products-heading" className="pb-24 pt-6">
+            <section aria-labelledby="products-heading" className="lg:pb-24 pt-6">
                 <div className="w-full">
                     {/* Filters */}
-                    <form className="hidden lg:block">
+                    <form className="lg:block">
                         {filters.map((section) => (
                             <Disclosure defaultOpen={true} as="div" key={section.id} className="border-b border-gray-200 py-6">
                                 {({open}) => (
@@ -150,12 +149,14 @@ const JobFilters = ({setData, data, filters = []}) => {
                                                         <input
                                                             id={`filter-${section.id}-${optionIdx}`}
                                                             name={`${section.id}[]`}
-                                                            defaultValue={option.value}
+                                                            // defaultValue={option.value}
                                                             type="checkbox"
+                                                            checked={data[section.id].includes(option.value)}
                                                             // defaultChecked={option.checked}
                                                             onChange={(e) => handleFilterChange(section.id, option.value, e.target.checked)}
                                                             className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                         />
+                                                        {console.log(data[section.id], option.value)}
                                                         <label
                                                             htmlFor={`filter-${section.id}-${optionIdx}`}
                                                             className="ml-3 text-sm text-gray-600"
@@ -205,6 +206,7 @@ const JobFilters = ({setData, data, filters = []}) => {
                                                     type="text"
                                                     className="w-full"
                                                     placeholder="Wybierz datę"
+                                                    value={data.periodStart ?? ''}
                                                     // onSelect={(e) => setData('period_start', parse(e.target.value, 'dd/MM/yyyy', new Date()).getTime() / 1000)}
                                                     // onClick={(e) => dobHandler(e)}
                                                     // onClick={(e) => console.log(e.target.value)}
@@ -226,6 +228,8 @@ const JobFilters = ({setData, data, filters = []}) => {
                                                     type="text"
                                                     className={`w-full`}
                                                     placeholder="Wybierz datę"
+                                                    value={data.periodEnd ?? ''}
+
                                                     // onSelect={(e) => setData('period_end', parse(e.target.value, 'dd/MM/yyyy', new Date()).getTime() / 1000)}
                                                     // onClick={(e) => dobHandler(e)}
                                                     // onClick={(e) => console.log(e.target.value)}

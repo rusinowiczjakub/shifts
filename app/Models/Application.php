@@ -13,8 +13,15 @@ class Application extends Model
         HasShift,
         HasMedicalStaff;
 
+    const STATUS_REQUESTED = 'REQUESTED';
+
     protected $fillable = [
-        'status'
+        'status',
+        'medical_staff_id',
+        'shift_id'
     ];
 
+    protected $attributes = [
+        'status' => self::STATUS_REQUESTED
+    ];
 }

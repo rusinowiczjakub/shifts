@@ -3,6 +3,7 @@
 use App\Actions\Auth\ResendVerificationCode;
 use App\Actions\Auth\VerifyEmail;
 use App\Actions\JobBoard;
+use App\Actions\Shift\Apply;
 use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
@@ -92,6 +93,7 @@ Route::prefix('staff')
                 Route::post('/profile/experience/{experience}', UpdateExperience::class)->name('profile.experience.update');
                 Route::delete('/profile/experience/{experience}', DeleteExperience::class)->name('profile.experience.delete');
                 Route::put('/profile/professional-types', UpdateProfileProfessionalTypes::class)->name('profile.professional-types.update');
+                Route::post('/shift/{shift}/apply', Apply::class)->name('shift.apply');
             });
 
             Route::get('/auth/verify-email', VerifyEmailPage::class)->name('verify-email.page');
