@@ -16,6 +16,10 @@ class Login
 
         $request->session()->regenerate();
 
+        if ($redirectTo = $request->query('redirectTo')) {
+            return Redirect::to($redirectTo);
+        }
+
         return Redirect::route('staff.dashboard');
     }
 }

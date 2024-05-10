@@ -32,7 +32,7 @@ import {router} from "@inertiajs/react";
 //     },
 // ]
 
-const JobFilters = ({setData, data, filters = []}) => {
+const JobFilters = ({setData, data, filters = [], submitFilters}) => {
     const datepickerFromRef = useRef();
     const datepickerToRef = useRef();
     const [shouldSubmit, setShouldSubmit] = useState(false);
@@ -83,13 +83,6 @@ const JobFilters = ({setData, data, filters = []}) => {
 
             setShouldSubmit(true);
         }
-    };
-
-    const submitFilters = () => {
-        router.get(route('jobboard.index'), data, {
-            preserveState: true,
-            preserveScroll: true
-        });
     };
 
     useEffect(() => {
@@ -212,6 +205,7 @@ const JobFilters = ({setData, data, filters = []}) => {
                                                     // onClick={(e) => console.log(e.target.value)}
                                                     // onSelect={(e) => console.log(e.target.value)}
                                                     // value={null}
+                                                    onChange={(e) => handleFilterChange('periodStart', e.target.value, true)}
                                                     // onSelect={(e) => handleFilterChange('periodStart', e.target.value, true)}
                                                     onSelect={(e) => handleFilterChange('periodStart', e.target.value, true)}
                                                     // value={data.periodStart || null}
@@ -229,7 +223,7 @@ const JobFilters = ({setData, data, filters = []}) => {
                                                     className={`w-full`}
                                                     placeholder="Wybierz datę"
                                                     value={data.periodEnd ?? ''}
-
+                                                    onChange={(e) => handleFilterChange('periodEnd', e.target.value, true)}
                                                     // onSelect={(e) => setData('period_end', parse(e.target.value, 'dd/MM/yyyy', new Date()).getTime() / 1000)}
                                                     // onClick={(e) => dobHandler(e)}
                                                     // onClick={(e) => console.log(e.target.value)}

@@ -8,6 +8,7 @@ import {Briefcase} from "@/Components/Icons/Briefcase";
 import {Pin} from "@/Components/Icons/Pin";
 import {Calendar} from "@/Components/Icons/Calendar";
 import {router} from "@inertiajs/react";
+import {useEffect, useLayoutEffect, useRef} from "react";
 
 const JobRow = ({shift, onClick}) => {
     const apply = (shiftId) => {
@@ -19,6 +20,15 @@ const JobRow = ({shift, onClick}) => {
             }
         })
     }
+
+    const progressRef = useRef();
+
+    useLayoutEffect(() => {
+        if (progressRef.current) {
+            progressRef.current.style.width = `${Math.round((shift.applications_count / shift.available_slots) * 100 )}%`;
+
+        }
+    }, [shift.applications_count, shift.available_slots, progressRef.current])
 
     return (
         <div onClick={() => onClick(shift)}
@@ -99,7 +109,10 @@ const JobRow = ({shift, onClick}) => {
             <div className="mt-6">
                 <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-[6px]">
                     <div
-                        className={`bg-blue-600 h-[6px] rounded-full w-[${(shift.applications_count / shift.available_slots) * 100}%]`}></div>
+                        ref={progressRef}
+                        style={{width: '0%'}}
+                        className={`bg-blue-600 h-[6px] rounded-full`}>
+                    </div>
                 </div>
                 <div className="mt-2">
                     <span className="text-slate-400 text-sm"><span

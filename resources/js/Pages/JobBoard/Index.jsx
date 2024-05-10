@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {Dialog} from '@headlessui/react'
 import JobRow from "@/Partials/JobBoard/JobRow";
 import JobFilters from "@/Pages/JobBoard/Partial/JobFilters";
-import {useForm} from "@inertiajs/react";
+import {router, useForm} from "@inertiajs/react";
 import {AdjustmentsHorizontalIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import {Loader} from "@/Components/Loader";
 
@@ -14,12 +14,19 @@ export default function Index({shifts, filters}) {
     const [isMobile, setIsMobile] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const {data, setData} = useForm({
+    const {data, setData, reset} = useForm({
         city: [],
         professionalType: [],
         periodStart: null,
         periodEnd: null
     });
+
+    const submitFilters = (withEmpty = false) => {
+        router.get(route('jobboard.index'), withEmpty ? {} : data, {
+            preserveState: true,
+            preserveScroll: true
+        });
+    };
 
     useEffect(() => {
         console.log(data)
@@ -47,7 +54,7 @@ export default function Index({shifts, filters}) {
                     {!isMobile &&
                         <div className="w-full lg:w-1/4 h-screen overflow-y-auto no-scrollbar pt-20">
                             <div className={'px-2 hidden md:flex flex-col gap-10'}>
-                                <JobFilters filters={filters} setData={setData} data={data}/>
+                                <JobFilters submitFilters={() => submitFilters()} filters={filters} setData={setData} data={data}/>
                             </div>
                         </div>
                     }
@@ -92,12 +99,20 @@ export default function Index({shifts, filters}) {
                         </Dialog.Title>
                         <Dialog.Panel>
 
-                            <JobFilters filters={filters} setData={setData} data={data}/>
-                            <div>
+                            <JobFilters submitFilters={() => submitFilters()} filters={filters} setData={setData} data={data}/>
+                            <div className={'flex flex-col lg:flex-row gap-2 justify-center'}>
                                 <button onClick={() => setIsModalOpen(false)}
                                     type={'button'}
                                         className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                     Zastosuj
+                                </button>
+                                <button onClick={() => {
+                                    reset()
+                                    submitFilters(true)
+                                }}
+                                    type={'button'}
+                                        className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-gray-500 transition-colors duration-300 transform border border-gray-400 rounded-lg md:w-1/2 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                    Resetuj filtry
                                 </button>
                             </div>
                         </Dialog.Panel>

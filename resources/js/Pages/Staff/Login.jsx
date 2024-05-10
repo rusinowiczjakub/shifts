@@ -5,12 +5,22 @@ import TextInput from "@/Components/TextInput";
 import InputError from "@/Components/InputError";
 import {Logo} from "@/Components/Logo";
 import {Loader} from "@/Components/Loader";
+import {useSearchParams} from "react-router-dom";
 
 export default function Register() {
     const {data, setData, post, processing, errors, reset} = useForm({
         email: '',
         password: '',
     })
+
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+
+    const searchParams = {};
+
+    for (const [key, value] of params) {
+        searchParams[key] = value;
+    }
 
     const submit = (e) => {
         e.preventDefault();
@@ -89,7 +99,7 @@ export default function Register() {
                                 </div>
                                 <div className={'text-sm'}>
                                     <span className={'text-gray-500'}>Nie masz konta? </span>
-                                    <button type={'button'} onClick={() => router.visit(route('staff.register'))} className={'text-blue-500'}>Zarejestruj się</button>
+                                    <button type={'button'} onClick={() => router.visit(route('staff.register', searchParams))} className={'text-blue-500'}>Zarejestruj się</button>
                                 </div>
                             </form>
                         </div>
