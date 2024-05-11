@@ -71,7 +71,7 @@ const ScheduleCalendar = ({shifts, token}) => {
             >
                 <div className="fixed inset-0 bg-black/30" aria-hidden="true"/>
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-                    <Dialog.Panel className="max-w-xl w-full space-y-4 border bg-white p-12">
+                    <Dialog.Panel className="max-w-xl max-h-screen overflow-y-scroll w-full space-y-4 border bg-white p-12">
                         <Dialog.Title className={'flex flex-row items-center justify-between'}>
                             <h2 className="font-semibold">Aplikacje</h2>
                             <button onClick={() => setSelectedShift(null)} className={'h-6 w-6'}>
