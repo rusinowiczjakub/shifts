@@ -62,10 +62,10 @@ const ApplicationsList = ({applications, token}) => {
     }
 
     return (
-        <ul role="list" className="divide-y divide-gray-100 w-full max-h-[500px] overflow-y-scroll no-scrollbar">
+        <ul role="list" className="divide-y divide-gray-100 w-full max-h-screen lg:max-h-[500px] overflow-y-scroll no-scrollbar">
             {
                 applications.map(
-                    (application, key) => <li key={key} className="flex justify-between items-center gap-x-6 py-5">
+                    (application, key) => <li key={key} className="flex flex-col md:flex-row justify-between items-center gap-x-6 gap-y-3 py-5">
                         <div className="flex min-w-0 gap-x-4">
                             <img className="h-12 w-12 flex-none rounded-full bg-gray-50"
                                  src={application.medical_staff?.user?.profile_photo_url}

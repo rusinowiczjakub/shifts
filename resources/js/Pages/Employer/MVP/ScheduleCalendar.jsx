@@ -9,6 +9,7 @@ import {format} from "date-fns";
 import {usePage} from "@inertiajs/react";
 import {Toast} from "flowbite-react";
 import {Check} from "@/Components/Icons/Check";
+import {XMarkIcon} from "@heroicons/react/24/outline";
 
 const dateTimeDisplayFormatter = value => {
     if (!value) return value;
@@ -55,7 +56,8 @@ const ScheduleCalendar = ({shifts, token}) => {
                 flash?.message &&
                 <div className={'fixed top-20 right-10 z-50'}>
                     <Toast>
-                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                        <div
+                            className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
                             <Check/>
                         </div>
                         <div className="pl-4 text-sm font-normal">{flash.message}</div>
@@ -70,9 +72,12 @@ const ScheduleCalendar = ({shifts, token}) => {
                 <div className="fixed inset-0 bg-black/30" aria-hidden="true"/>
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
                     <Dialog.Panel className="max-w-xl w-full space-y-4 border bg-white p-12">
-                        <Dialog.Title>
+                        <Dialog.Title className={'flex flex-row items-center justify-between'}>
                             <h2 className="font-semibold">Aplikacje</h2>
-                            </Dialog.Title>
+                            <button onClick={() => setSelectedShift(null)} className={'h-6 w-6'}>
+                                <XMarkIcon/>
+                            </button>
+                        </Dialog.Title>
                         <div
                             className="flex flex-col md:flex-row justify-between py-6 border-y border-gray-100 mb-6">
                             <div className="box group">
