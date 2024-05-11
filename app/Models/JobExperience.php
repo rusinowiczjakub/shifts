@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMedicalStaff;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class JobExperience extends Model
 {
-    use HasFactory;
+    use HasFactory,
+        HasMedicalStaff;
 
     public $timestamps = false;
 

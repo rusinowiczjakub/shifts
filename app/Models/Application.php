@@ -14,6 +14,7 @@ class Application extends Model
         HasMedicalStaff;
 
     const STATUS_REQUESTED = 'REQUESTED';
+    const STATUS_ACCEPTED = 'ACCEPTED';
 
     protected $fillable = [
         'status',

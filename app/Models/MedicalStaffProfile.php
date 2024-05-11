@@ -47,4 +47,9 @@ class MedicalStaffProfile extends Model
     {
         return $this->belongsTo(GeoCommunity::class, 'geo_community_id');
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

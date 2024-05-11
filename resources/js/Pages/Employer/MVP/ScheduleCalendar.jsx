@@ -1,28 +1,71 @@
 import GuestLayout from "@/Layouts/GuestLayout";
 import Calendar from "@/Pages/Employer/MVP/Partials/Calendar";
 import {Logo} from "@/Components/Logo";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Dialog} from '@headlessui/react'
 import ApplicationsList from "@/Pages/Employer/MVP/Partials/ApplicationsList";
 import EditableContent from "@/Components/EditableContent";
 import {format} from "date-fns";
+import {usePage} from "@inertiajs/react";
+import {Toast} from "flowbite-react";
+import {Check} from "@/Components/Icons/Check";
 
 const dateTimeDisplayFormatter = value => {
-    console.log(value);
     if (!value) return value;
     // Formatowanie daty
     return format(new Date(value), 'dd/MM/yyyy HH:mm');
 };
 
-const ScheduleCalendar = ({shifts}) => {
+const ScheduleCalendar = ({shifts, token}) => {
     const [selectedShift, setSelectedShift] = useState(null);
+
+    useEffect(() => {
+        shifts.map((shift) => {
+            if (selectedShift?.id === shift.id) {
+                setSelectedShift(
+                    {
+                        ...shift
+                    }
+                )
+            }
+        })
+    }, [shifts])
+
+    const {flash} = usePage().props
+    const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+        const flashTimer = setTimeout(() => {
+            setShowToast(false);
+        }, 3000)
+
+        if (flash.message) {
+            setShowToast(true)
+        }
+
+        return () => {
+            clearTimeout(flashTimer);
+        };
+    }, [flash])
 
     return (
         <GuestLayout>
+            {
+                showToast &&
+                flash?.message &&
+                <div className={'fixed top-20 right-10 z-50'}>
+                    <Toast>
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                            <Check/>
+                        </div>
+                        <div className="pl-4 text-sm font-normal">{flash.message}</div>
+                    </Toast>
+                </div>
+            }
             <Dialog
                 as="div"
                 open={selectedShift !== null} onClose={() => setSelectedShift(null)}
-                className="relative z-50"
+                className="relative z-20"
             >
                 <div className="fixed inset-0 bg-black/30" aria-hidden="true"/>
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
@@ -69,7 +112,7 @@ const ScheduleCalendar = ({shifts}) => {
                             </div>
                         </div>
 
-                        <ApplicationsList/>
+                        <ApplicationsList token={token} applications={selectedShift?.applications}/>
                     </Dialog.Panel>
                 </div>
             </Dialog>

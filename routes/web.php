@@ -1,5 +1,6 @@
 <?php
 
+use App\Actions\Application\ChangeStatus;
 use App\Actions\Auth\ResendVerificationCode;
 use App\Actions\Auth\VerifyEmail;
 use App\Actions\JobBoard;
@@ -134,6 +135,8 @@ Route::get('/jobboard', JobBoard\Index::class)->name('jobboard.index');
 Route::get('/shift-request/{token}', Employer\ShiftRequestForm::class)->name('employer.shift-request');
 Route::post('/shift/{token}', CreateShift::class)->name('shift.create');
 Route::get('/calendar/{token}', Employer\ScheduleCalendar::class);
+Route::get('/preview/{token}/{application}', Employer\ApplicationPreview::class)->name('employer.profile-preview');
+Route::post('/application/{token}/{application}/{status}', ChangeStatus::class)->name('employer.application.change-status');
 //Route::get('/', function () {
 //    return Inertia::render('Welcome', [
 //        'canLogin' => Route::has('login'),
