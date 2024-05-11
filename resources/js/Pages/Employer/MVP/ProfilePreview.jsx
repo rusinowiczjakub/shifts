@@ -66,15 +66,18 @@ const ProfilePreview = ({application}) => {
                                                     : application.medical_staff?.user?.email
                                             }
 
-                                            <Popover className="relative">
-                                                <Popover.Button as={'div'} className={'w-5 h-5 cursor-pointer'}>
-                                                    <QuestionMarkCircleIcon/>
-                                                </Popover.Button>
+                                            {
+                                                application.status !== 'ACCEPTED' &&
+                                                <Popover className="relative">
+                                                    <Popover.Button as={'div'} className={'w-5 h-5 cursor-pointer'}>
+                                                        <QuestionMarkCircleIcon/>
+                                                    </Popover.Button>
 
-                                                <Popover.Panel className="absolute top-0 left-5 z-10 bg-white shadow-md p-2 rounded-md">
-                                                    Dostępne po zaakceptowaniu
-                                                </Popover.Panel>
-                                            </Popover>
+                                                    <Popover.Panel className="absolute top-0 left-5 z-10 bg-white shadow-md p-2 rounded-md">
+                                                        Dostępne po zaakceptowaniu
+                                                    </Popover.Panel>
+                                                </Popover>
+                                            }
                                         </dd>
                                     </div>
                                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -93,15 +96,18 @@ const ProfilePreview = ({application}) => {
                                                     : application.medical_staff?.user?.phone_number
                                             }
 
-                                            <Popover className="relative">
-                                                <Popover.Button as={'div'} className={'w-5 h-5 cursor-pointer'}>
-                                                    <QuestionMarkCircleIcon/>
-                                                </Popover.Button>
+                                            {
+                                                application.status !== 'ACCEPTED' &&
+                                                <Popover className="relative">
+                                                    <Popover.Button as={'div'} className={'w-5 h-5 cursor-pointer'}>
+                                                        <QuestionMarkCircleIcon/>
+                                                    </Popover.Button>
 
-                                                <Popover.Panel className="absolute top-0 left-5 z-10 bg-white shadow-md p-2 rounded-md">
-                                                    Dostępne po zaakceptowaniu
-                                                </Popover.Panel>
-                                            </Popover>
+                                                    <Popover.Panel className="absolute top-0 left-5 z-10 bg-white shadow-md p-2 rounded-md">
+                                                        Dostępne po zaakceptowaniu
+                                                    </Popover.Panel>
+                                                </Popover>
+                                            }
                                         </dd>
                                     </div>
                                     <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
