@@ -104,12 +104,18 @@ export default function Index({shifts, filters}) {
                                     buttonTitle={'Włącz powiadomienia'}
                                     buttonAction={() => activateNotifications()}
                                 />
-                                    : <EmptyState
+                                    : ''
+                            }
+                            {
+                                shifts.length < 1 &&
+                                auth.user?.active_notifications
+                                    ? <EmptyState
                                         header={'Nie znaleziono żadnych zmian'}
                                         subheader={'Powiadomimy Cię, gdy pojawi się nowa zmiana'}
                                         buttonTitle={'Wyłącz powiadomienia'}
                                         buttonAction={() => deactivateNotifications()}
                                     />
+                                    : ''
                             }
                         </div>
                     </div>
