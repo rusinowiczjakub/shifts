@@ -42,7 +42,9 @@ class Apply
                                 $query->from('shifts')->select('start_date')->where('id', $shift->id);
                             });
                     });
-            })->count();
+            })
+            ->where('status', [Application::STATUS_ACCEPTED])
+            ->count();
 
         if ($overlappingApplications > 0) {
             return redirect()->back()->with([
