@@ -1,0 +1,1 @@
+import{j as t,F as m,a as r}from"./app-0919c749.js";import{Header as a}from"./Header-2358ed4c.js";import{Hero as e}from"./Hero-064a857a.js";import{About as i}from"./About-544956f9.js";import{Waitlist as s}from"./Waitlist-b4eba0ef.js";import"./ResponsiveNavLink-d564083b.js";const l=o=>t(m,{children:[r(a,{}),r(e,{...o}),r(i,{}),r(s,{...o})]});export{l as default};
