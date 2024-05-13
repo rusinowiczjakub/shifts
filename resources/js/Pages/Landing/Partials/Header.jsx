@@ -86,17 +86,20 @@ export const Header = () => {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-                        <ResponsiveNavLink href={route('staff.profile.edit')} className={'px-4 flex flex-row gap-3'}>
-                            <img className={'w-10 h-10 rounded-full'} src={auth.user?.profile_photo_url}/>
-                            <div>
-                                <div className="font-medium text-base text-gray-800 dark:text-gray-200">
-                                    {auth.user.name}
+                    {
+                        auth.user &&
+                        <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                            <ResponsiveNavLink href={route('staff.profile.edit')} className={'px-4 flex flex-row gap-3'}>
+                                <img className={'w-10 h-10 rounded-full'} src={auth.user?.profile_photo_url}/>
+                                <div>
+                                    <div className="font-medium text-base text-gray-800 dark:text-gray-200">
+                                        {auth.user?.name}
+                                    </div>
+                                    <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
                                 </div>
-                                <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
-                            </div>
-                        </ResponsiveNavLink>
-                    </div>
+                            </ResponsiveNavLink>
+                        </div>
+                    }
                 </div>
             </nav>
         </header>
