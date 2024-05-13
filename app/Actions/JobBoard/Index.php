@@ -21,8 +21,8 @@ class Index
     public function __invoke(Request $request): Response {
         $query = Shift::with('institution', 'address', 'professionalType')
             ->withCount([
-                'applications' => fn(Builder $builder) => $builder->whereNotIn(
-                    'status', [Application::STATUS_DECLINED, Application::STATUS_CANCELED, Application::STATUS_REMOVED]
+                'applications' => fn(Builder $builder) => $builder->whereIn(
+                    'status', [Application::STATUS_ACCEPTED]
                 )
             ])
             ->where('start_date', '>', now());

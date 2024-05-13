@@ -51,8 +51,8 @@ class Apply
             ]);
         }
 
-        $applicationsCount = $shift->applications()->whereNotIn(
-            'status', [Application::STATUS_DECLINED, Application::STATUS_CANCELED, Application::STATUS_REMOVED]
+        $applicationsCount = $shift->applications()->whereIn(
+            'status', [Application::STATUS_ACCEPTED]
         )->count();
 
         if ($shift->available_slots <= $applicationsCount) {
