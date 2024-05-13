@@ -45,7 +45,7 @@ class Index
             ]);
         }
 
-        $shifts = $query->get();
+        $shifts = $query->get()->filter(fn(Shift $shift) => $shift->applications_count !== $shift->available_slots);
 
         return Inertia::render('JobBoard/Index', [
             'shifts' => $shifts,
