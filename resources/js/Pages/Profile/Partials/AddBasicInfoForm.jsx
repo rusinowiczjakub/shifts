@@ -1,5 +1,3 @@
-import {CheckboxCardGroup} from "@/Components/CheckboxCardGroup";
-import {CheckboxCard} from "@/Components/CheckboxCard";
 import {useForm} from "@inertiajs/react";
 import {Loader} from "@/Components/Loader";
 import {Combobox, Transition} from "@headlessui/react";

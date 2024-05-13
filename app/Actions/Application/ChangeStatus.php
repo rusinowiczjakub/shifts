@@ -7,6 +7,8 @@ namespace App\Actions\Application;
 use App\Models\Application;
 use App\Models\Institution;
 use App\Models\Shift;
+use App\Models\User;
+use App\Notifications\ApplicationStatusChanged;
 use Illuminate\Http\RedirectResponse;
 
 class ChangeStatus
@@ -25,6 +27,10 @@ class ChangeStatus
         $application->update([
             'status' => $status
         ]);
+
+        /** @var User $user */
+        $user = $application->medicalStaff->user;
+        $user->notify(new ApplicationStatusChanged($application));
 
         return redirect()->back()->with([
             'message' => 'Zmieniono status aplikacji.'

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import {Link} from '@inertiajs/react';
 import {Logo} from "@/Components/Logo";
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({auth, header, children}) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -22,15 +22,16 @@ export default function Authenticated({ auth, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                {/*<NavLink className={'relative'} href={route('staff.dashboard')} active={route().current('staff.dashboard')}>*/}
-                                {/*    Dashboard*/}
-                                {/*</NavLink>*/}
+                                <NavLink className={'relative'} href={route('jobboard.index')}>
+                                    Przeglądaj zmiany
+                                </NavLink>
                                 <NavLink className={'relative'} href={'#'} active={route().current('staff.shifts')}>
                                     Twoje zmiany
                                     <span
                                         className="ml-2 bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Soon!</span>
                                 </NavLink>
-                                <NavLink href={route('staff.profile.edit')} active={route().current('staff.profile.edit')}>
+                                <NavLink href={route('staff.profile.edit')}
+                                         active={route().current('staff.profile.edit')}>
                                     Profil
                                 </NavLink>
                             </div>
@@ -64,6 +65,9 @@ export default function Authenticated({ auth, header, children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <Dropdown.Link href={route('jobboard.index')}>
+                                            Przeglądaj zmiany
+                                        </Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Wyloguj się
                                         </Dropdown.Link>
@@ -108,7 +112,8 @@ export default function Authenticated({ auth, header, children }) {
                             <span
                                 className="ml-2 bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Soon!</span>
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('staff.profile.edit')} active={route().current('staff.profile.edit')}>
+                        <ResponsiveNavLink href={route('staff.profile.edit')}
+                                           active={route().current('staff.profile.edit')}>
                             Profil
                         </ResponsiveNavLink>
                     </div>

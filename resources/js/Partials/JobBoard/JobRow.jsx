@@ -9,6 +9,7 @@ import {Pin} from "@/Components/Icons/Pin";
 import {Calendar} from "@/Components/Icons/Calendar";
 import {router} from "@inertiajs/react";
 import {useEffect, useLayoutEffect, useRef} from "react";
+import {BuildingOffice2Icon} from "@heroicons/react/24/outline";
 
 const JobRow = ({shift, onClick}) => {
     const apply = (shiftId) => {
@@ -36,17 +37,15 @@ const JobRow = ({shift, onClick}) => {
             <div className="flex items-center justify-between">
                 <div className="flex items-center">
                     <div
-                        className="w-16 h-16 object-cover mr-2 flex items-center justify-center bg-white dark:bg-slate-900 shadow dark:shadow-gray-700 rounded-md">
-                        <img
-                            src="https://edukacja.um.warszawa.pl/documents/66399/49001353/Szpital+Biela%C5%84ski+logo.png/bebcbdba-16af-9128-bb3b-40fbf26ce9b2?version=1.0&t=1650530781517&imagePreview=1"
-                            className="size-8" alt=""/>
+                        className="w-16 h-16 object-cover mr-2 flex items-center justify-center bg-blue-100 text-blue-500 rounded-md">
+                        <BuildingOffice2Icon className={'w-6 h-6'}/>
                     </div>
 
                     <div className="ms-3">
-                        <a href="employer-detail.html"
+                        <div
                            className="block text-[16px] font-semibold hover:text-emerald-600 transition-all duration-500">
                             {shift.institution.name}
-                        </a>
+                        </div>
                         <span className="block text-sm text-slate-400">{formatDistance(
                             parseISO(shift.created_at),
                             new Date(),

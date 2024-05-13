@@ -5,14 +5,19 @@ import {useEffect, useState} from "react";
 import {Dialog} from '@headlessui/react'
 import JobRow from "@/Partials/JobBoard/JobRow";
 import JobFilters from "@/Pages/JobBoard/Partial/JobFilters";
-import {router, useForm} from "@inertiajs/react";
+import {router, useForm, usePage} from "@inertiajs/react";
 import {AdjustmentsHorizontalIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import {Loader} from "@/Components/Loader";
+import EmptyState from "@/Components/EmptyState";
+import {Header} from "@/Pages/Landing/Partials/Header";
 
 export default function Index({shifts, filters}) {
     const [selectedJob, selectJob] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {auth} = usePage().props;
+
+    console.log(auth);
 
     const {data, setData, reset} = useForm({
         city: [],
@@ -27,6 +32,19 @@ export default function Index({shifts, filters}) {
             preserveScroll: true
         });
     };
+
+    const activateNotifications = () => {
+        router.post(route('staff.notifications.activate'), {}, {
+            preserveScroll: true
+        })
+    }
+
+    const deactivateNotifications = () => {
+        router.post(route('staff.notifications.deactivate'), {}, {
+            preserveScroll: true
+        })
+    }
+
 
     useEffect(() => {
         console.log(data)
@@ -46,9 +64,7 @@ export default function Index({shifts, filters}) {
 
     return (
         <JobBoardAppLayout>
-            <Hero>
-                <Navbar/>
-            </Hero>
+            <Header/>
             <div className="px-8">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 flex flex-col lg:flex-row lg:justify-between">
                     {!isMobile &&
@@ -79,6 +95,22 @@ export default function Index({shifts, filters}) {
                                 </div>
 
                             })}
+                            {
+                                shifts.length < 1 &&
+                                ! auth.user?.active_notifications
+                                    ? <EmptyState
+                                    header={'Nie znaleziono żadnych zmian'}
+                                    subheader={'Włącz powiadmienia, aby być na bieżąco.'}
+                                    buttonTitle={'Włącz powiadomienia'}
+                                    buttonAction={() => activateNotifications()}
+                                />
+                                    : <EmptyState
+                                        header={'Nie znaleziono żadnych zmian'}
+                                        subheader={'Powiadomimy Cię, gdy pojawi się nowa zmiana'}
+                                        buttonTitle={'Wyłącz powiadomienia'}
+                                        buttonAction={() => deactivateNotifications()}
+                                    />
+                            }
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,9 @@ class Application extends Model
 
     const STATUS_REQUESTED = 'REQUESTED';
     const STATUS_ACCEPTED = 'ACCEPTED';
+    const STATUS_DECLINED = 'DECLINED';
+    const STATUS_CANCELED = 'CANCELED';
+    const STATUS_REMOVED = 'REMOVED';
 
     protected $fillable = [
         'status',

@@ -9,8 +9,10 @@ use App\Actions\Shift\CreateShift;
 use App\Actions\Shift\ShowApplicationDetails;
 use App\Actions\Shift\ShowShiftApplications;
 use App\Actions\Shift\ShowShiftList;
+use App\Actions\Staff\ActivateNotifications;
 use App\Actions\Staff\CreateAccount;
 use App\Actions\Staff\CreateExperience;
+use App\Actions\Staff\DeactivateNotifications;
 use App\Actions\Staff\DeleteExperience;
 use App\Actions\Staff\DeleteSkill;
 use App\Actions\Staff\DeleteSkillMedia;
@@ -95,6 +97,8 @@ Route::prefix('staff')
                 Route::delete('/profile/experience/{experience}', DeleteExperience::class)->name('profile.experience.delete');
                 Route::put('/profile/professional-types', UpdateProfileProfessionalTypes::class)->name('profile.professional-types.update');
                 Route::post('/shift/{shift}/apply', Apply::class)->name('shift.apply');
+                Route::post('/notifications/activate', ActivateNotifications::class)->name('notifications.activate');
+                Route::post('/notifications/deactivate', DeactivateNotifications::class)->name('notifications.deactivate');
             });
 
             Route::get('/auth/verify-email', VerifyEmailPage::class)->name('verify-email.page');
@@ -119,7 +123,7 @@ Route::post('employer/register', Employer\Register::class);
 
 Route::get('/', function () {
     return Inertia::render('Landing/Index');
-});
+})->name('landing');
 
 Route::post('/', \App\Actions\Landing\CreateLead::class)
     ->name('landing.lead.create');
@@ -145,5 +149,6 @@ Route::post('/application/{token}/{application}/{status}', ChangeStatus::class)-
 //        'phpVersion' => PHP_VERSION,
 //    ]);
 //});
+
 
 require __DIR__.'/auth.php';

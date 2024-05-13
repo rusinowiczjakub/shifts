@@ -35,7 +35,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'type',
         'onboarding_finished_at',
-        'phone_number'
+        'phone_number',
+        'active_notifications'
     ];
 
     /**

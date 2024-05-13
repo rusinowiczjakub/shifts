@@ -51,7 +51,9 @@ class Apply
             ]);
         }
 
-        $applicationsCount = $shift->applications()->count();
+        $applicationsCount = $shift->applications()->whereNotIn(
+            'status', [Application::STATUS_DECLINED, Application::STATUS_CANCELED, Application::STATUS_REMOVED]
+        )->count();
 
         if ($shift->available_slots <= $applicationsCount) {
             return redirect()->back()->with([
