@@ -109,8 +109,6 @@ export default function Authenticated({auth, header, children}) {
                         {/*</ResponsiveNavLink>*/}
                         <ResponsiveNavLink href={route('jobboard.index')} active={route().current('jobboard.index')}>
                             Przeglądaj zmiany
-                            <span
-                                className="ml-2 bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Soon!</span>
                         </ResponsiveNavLink>
                         <ResponsiveNavLink href={'#'} active={route().current('staff.shifts')}>
                             Twoje zmiany
