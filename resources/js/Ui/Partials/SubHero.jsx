@@ -2,7 +2,7 @@ import {Primary} from "@/Ui/Components/Button";
 
 export const SubHero = () => {
     return (
-        <div className="flex gap-4 items-start relative w-full">
+        <div className="flex flex-col md:flex-row gap-4 items-start relative w-full">
             <div
                 className="px-10 py-20 flex flex-col gap-2.5 items-center flex-1 self-stretch relative w-full h-full bg-transparent"
             >
