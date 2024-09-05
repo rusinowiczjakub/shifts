@@ -2,6 +2,7 @@ import {router, useForm, usePage} from "@inertiajs/react";
 import { Toast } from 'flowbite-react';
 import {useState} from "react";
 import {Loader} from "@/Components/Loader";
+import {Primary} from '@/Ui/Components/Button';
 
 export const Hero = (props) => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -61,11 +62,12 @@ export const Hero = (props) => {
                                 gdzie każda zmiana otwiera drzwi do sukcesu. <span className={'text-blue-600'}>Załóż konto</span> i uzupełnij swój profil!</p>
 
                             <div className={'mt-8 flex flex-col lg:flex-row'}>
-                                <button type={'button'}
-                                        onClick={() => router.visit(route('staff.register'))}
-                                        className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                                    Załóż konto
-                                </button>
+                                <Primary>test</Primary>
+                                {/*<button type={'button'}*/}
+                                {/*        onClick={() => router.visit(route('staff.register'))}*/}
+                                {/*        className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors duration-300 transform bg-blue-600 rounded-lg md:w-1/2 hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">*/}
+                                {/*    Załóż konto*/}
+                                {/*</button>*/}
                                 <button type={'button'}
                                         onClick={() => router.visit(route('staff.login'))}
                                         className="w-full flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 transform bg-white text-gray-500 rounded-lg md:w-1/2 hover:text-gray-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
