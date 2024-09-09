@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Enums\JobType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,14 +14,17 @@ return new class extends Migration
     {
         Schema::create('shifts', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
-            $table->unsignedBigInteger('institution_id');
-            $table->unsignedBigInteger('address_id');
-            $table->decimal('total_pay', 18, 2);
-            $table->integer('available_slots');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
+            $table->unsignedBigInteger('institution_id')->nullable();
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->decimal('total_pay', 18, 2)->nullable();
+            $table->integer('available_slots')->nullable();
             $table->json('additional_requirements')->nullable();
-            $table->unsignedBigInteger('professional_type_id');
+            $table->unsignedBigInteger('professional_type_id')->nullable();
+            $table->text('description');
+            $table->enum('job_type', collect(JobType::cases())->map(fn(JobType $jobType) => $jobType->value)->toArray());
+
             $table->timestamps();
             $table->softDeletes();
         });
