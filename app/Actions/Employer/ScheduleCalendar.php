@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Employer;
 
-use App\Models\Institution;
+use App\Models\Facility;
 use App\Models\Shift;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -12,8 +12,8 @@ use Inertia\Response;
 class ScheduleCalendar
 {
     public function __invoke(string $token): Response {
-        /** @var Institution $institution */
-        $institution = Institution::where('token', $token)->firstOrFail();
+        /** @var Facility $institution */
+        $institution = Facility::where('token', $token)->firstOrFail();
         $shifts = Shift::with([
             'address',
             'applications' => function ($query) {

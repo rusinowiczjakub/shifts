@@ -69,7 +69,9 @@ export const Navbar = () => {
                 </div>
             </div>
             <div className="flex gap-2 items-start relative bg-transparent">
-                <ButtonSecondary>Zaloguj się</ButtonSecondary>
+                <ButtonSecondary
+                    // onClick={}
+                >Zaloguj się</ButtonSecondary>
                 <ButtonPrimary>Przeglądaj oferty</ButtonPrimary>
             </div>
         </div>

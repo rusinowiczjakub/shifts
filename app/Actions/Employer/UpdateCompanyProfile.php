@@ -6,7 +6,7 @@ namespace App\Actions\Employer;
 
 use App\Http\Requests\Employer\UpdateCompanyProfileRequest;
 use App\Models\Address;
-use App\Models\Institution;
+use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +24,7 @@ class UpdateCompanyProfile
     {
         /** @var User $user */
         $user = $this->authManager->user();
-        /** @var Institution $institution */
+        /** @var Facility $institution */
         $institution = $user->institution;
 
 

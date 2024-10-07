@@ -14,15 +14,22 @@ return new class extends Migration
         Schema::create('external_jobs', function (Blueprint $table) {
             $table->id();
 
+            $table->string('external_id');
             $table->text('title')->nullable();
             $table->text('description')->nullable();
-            $table->float('hourly_rate')->nullable();
+            $table->float('rate')->nullable();
             $table->string('rate_type')->nullable();
             $table->text('link')->nullable();
             $table->text('location')->nullable();
             $table->text('employer')->nullable();
             $table->string('source')->nullable();
-            $table->string('contract_Type')->nullable();
+            $table->string('contract_type')->nullable();
+            $table->string('region')->nullable();
+            $table->string('job_type')->nullable();
+            $table->timestamp('published_at')->nullable();
+            $table->timestamp('valid_to')->nullable();
+
+            $table->timestamps();
         });
     }
 

@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Concerns\HasAddresses;
 use App\Models\Concerns\HasProfessionalType;
+use App\Models\Enums\ContractType;
 use App\Models\Enums\JobType;
+use App\Models\Enums\RateType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,18 +27,21 @@ class Shift extends Model
         'institution_id',
         'address_id',
         'total_pay',
-        'available_slots',
         'additional_requirements',
-        'hourly_rate',
+        'rate',
+        'rate_type',
         'description',
-        'job_type'
+        'job_type',
+        'contract_types'
     ];
 
     protected $casts = [
         'start_date' => 'datetime',
         'end_date' => 'datetime',
         'additional_requirements' => 'array',
-        'job_type' => JobType::class
+        'job_type' => JobType::class,
+        'agreement_type' => ContractType::class,
+        'rate_type' => RateType::class
     ];
 
     public function applications(): HasMany
@@ -44,9 +49,9 @@ class Shift extends Model
         return $this->hasMany(Application::class, 'shift_id');
     }
 
-    public function institution(): BelongsTo
+    public function facility(): BelongsTo
     {
-        return $this->belongsTo(Institution::class, 'institution_id');
+        return $this->belongsTo(Facility::class, 'institution_id');
     }
 
     public function address(): BelongsTo

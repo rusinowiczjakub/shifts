@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Employer;
 
 use App\Http\Requests\Employer\UpdateAddressRequest;
-use App\Models\Institution;
+use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +22,7 @@ class CreateAddress
     {
         /** @var User $user */
         $user = $this->authManager->user();
-        /** @var Institution $institution */
+        /** @var Facility $institution */
         $institution = $user->institution;
 
         $institution->addresses()->create(

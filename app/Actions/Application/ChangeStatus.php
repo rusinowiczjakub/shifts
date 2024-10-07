@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Application;
 
 use App\Models\Application;
-use App\Models\Institution;
+use App\Models\Facility;
 use App\Models\Shift;
 use App\Models\User;
 use App\Notifications\ApplicationStatusChanged;
@@ -15,7 +15,7 @@ class ChangeStatus
 {
     public function __invoke(string $token, Application $application, string $status): RedirectResponse
     {
-        $institution = Institution::where('token', $token)->first();
+        $institution = Facility::where('token', $token)->first();
 
         /** @var Shift $shift */
         $shift = $application->shift;

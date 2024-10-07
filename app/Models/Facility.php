@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class Institution extends Model
+class Facility extends Model
 {
     use HasFactory;
+
+    protected $table = 'institutions';
 
     protected $fillable = [
         'name',
         'nip',
         'regon',
-        'krs'
+        'krs',
+        'user_id'
     ];
 
     protected $casts = [

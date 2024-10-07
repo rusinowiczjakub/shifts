@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Actions\Employer;
 
 use App\Models\Enums\UserType;
-use App\Models\Institution;
+use App\Models\Facility;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class Register
             'type' => UserType::EMPLOYER->value
         ]);
 
-        /** @var Institution $institution */
+        /** @var Facility $institution */
         $institution = $user->institution()->create();
         $institution->address()->create([
             'is_default' => true
